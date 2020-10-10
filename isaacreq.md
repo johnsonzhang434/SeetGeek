@@ -1,12 +1,124 @@
+# Test Cases 
 
+Test data:
+```python
+test_user = User(
+    email='test_frontend@test.com',
+    name='test_frontend',
+    password=generate_password_hash('test_frontendA1$')
+)
+```
+
+
+## Test Case R1.P.1 - The login form can be submitted as a POST request to the current URL
+
+Mocking:
+
+- Mock `backend.get_user` to return a `test_user` instance 
+
+Actions: 
+
+- open /logout (to invalidate any logged-in sessions that may exist)
+- open /login
+- enter `test_user`'s email into element `#email`
+- enter `test_user`'s password into element `#password`
+- click element `#btn-submit`
+- validate that a redirect with code 303 has occured
+
+## Test Case R1.P.2 - Email and password both cannot be empty
+
+Note: these checks should be done clientside first, to prevent the client from sending pointless requests that will obviously return an error. The server should just return a generic "incorrect username and password" when a invalid request is manually submitted. 
+
+
+Actions:
+
+- open /login
+- click element `#btn-submit`
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- open /login
+- enter `test_user`'s email into the element `#email`
+- click element `#btn-submit`
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- open /login
+- enter `test_user`'s password into the element `#password`
+- click element `#btn-submit`
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+
+## Test Case R1.P.3 - Email has to follow addr-spec defined in RFC 5322
+
+Note: This test should also be done clientside, and honestly it doesn't really even need to exist, (at least for /login) just say the email and/or password is incorrect) 
+
+Actions:
+
+- For the following emails: `["Test.test.com", "test@test@test.com", "test\"(test,:;<>[\\]@test.com", "test\"test test@test.com", "12345678901234567890123456789012345678901234567890123456789012341234567890123456789012345678901234567890123456789012345678901234@test.com", "test..test@test.com", "test.test@test..com"]` 
+- open /login 
+- Enter email in element `#email`
+- enter a valid password in `#password` (ex. `Password1!`)
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+
+## Test Case R1.P.4 - Password has to meet the required complexity: min lenght 6, >1 upper, >1 lower, >1 special.
+
+Note: Why is this in the login api endpoint, we really should not care about what they enter, in fact these should not even be chacked clientside and instead should be allowed to pass through to the server, so that it eats up the client's rate limit tokens. Users should be 1000000% sure that the password they are entering in is not only valid, but  is actually indeed their password. 
+
+Actions:
+
+- For the following passwords: `["a1A!","aaaAAA111", "aaaAAA!!!!", "AAAA1111!!!!", "aaa111!!!!"]`
+- open /login
+- Enter a valid email in element `#email` (ex. `test@test.com`)
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+
+## Test Case R1.P.5 - For any formatting errors, render the login page and show the message 'email/password format is incorrect'
+
+Covered by test cases R1.P.2, R1.P.3, R1.P.4.
+
+## Test Case R1.P.6 - If the email/password are correct redirect to /
+
+Mock:
+
+- Mock `backend.get_user` to return a `test_user` instance 
+
+Actions: 
+
+- open /login
+- enter `test_user`'s email into element `#email`
+- enter `test_user`'s password into element `#password`
+- click element `#btn-submit`
+- validate that a redirect to / has occured
+
+## Test Case R1.P.7 - Otherwise redirect to /login asnd show the message 'email/password combination incorrect'
+
+Mock:
+
+- Mock `backend.get_user` to return a `test_user` instance 
+
+Actions: 
+
+- open /login
+- enter `test_user`'s email into element `#email`
+- enter `Password1$` into element `#password`
+- click element `#btn-submit`
+- validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
+- open /login
+- enter `test_user@wrong.com` into element `#email`
+- enter `test_user`'s password into element `#password`
+- click element `#btn-submit`
+- validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
+- open /login
+- enter `wrong@wrong.com` into element `#email`
+- enter `Wrrrr0ng!` into element `#password`
+- click element `#btn-submit`
+- valideate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
+
+
+# Summary 
 | Target              | ID     | Purpose                                                                                                                                  |
 |---------------------|--------|------------------------------------------------------------------------------------------------------------------------------------------|
 | R1 /login [POST]    |        |                                                                                                                                          |
 |                     | R1.P.1 | The login form can be submitted as a POST request to the current URL (/login)                                                            |
-|                     | R1.P.2 | Email and password both cannot be empty                                                                                                  |
-|                     | R1.P.3 | Email has to follow addr-spec difined in RFC 5322                                                                                        |
-|                     | R1.P.4 | Password has to meet the required complexity: min lenght 6, at least 1 upper case, at least 1 lower case, at least 1 special char        |
-|                     | R1.P.5 | For any formatting erros, render the login page and show the message 'email/password format is incorrect'                                |
+|                     | R1.P.2 | Email and password both cannot be empty                                                                                                                                                             |
+|                     | R1.P.3 | Email has to follow addr-spec defined in RFC 5322                                                                                                                                                  |
+|                     | R1.P.4 | Password has to meet the required complexity: min lenght 6, at least 1 upper case, at least 1 lower case, at least 1 special char                                                                                 |
+|                     | R1.P.5 | For any formatting errors, render the login page and show the message 'email/password format is incorrect'                                                                                                          |
 |                     | R1.P.6 | If the email/password are correct, redirect to /                                                                                         |
 |                     | R1.P.7 | Otherwise, redirect to /login and show message 'email/password combination incorrect'                                                    |
 | R2 /register [POST] |        |                                                                                                                                          |
