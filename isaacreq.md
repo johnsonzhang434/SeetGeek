@@ -210,7 +210,10 @@ Actions:
 - click element `input[type="submit"]`
 - validate that there has been a redirect to /login and no error
 
-## Test case R2.P.6 - if the email already exists, show the message 'this email has been ALREADY used`
+## Test case R2.P.6 - formatting errors, redirect to /login with message '{} format is incorrect'.format(attrib)
+covered in R2.P.5, R2.P.4
+
+## Test case R2.P.7 - if the email already exists, show the message 'this email has been ALREADY used`
 
 Mock:
 
@@ -233,7 +236,7 @@ Action:
 - click element `input[type="submit"]`
 - validate that there has been a redirect to /login and no error 
 - 
-## Test case R2.P.7 - if no error create new user, set balance to 5000, go to /login page
+## Test case R2.P.8 - if no error create new user, set balance to 5000, go to /login page
 
 Action: 
 
@@ -267,15 +270,15 @@ Action:
 |---------------------|--------|------------------------------------------------------------------------------------------------------------------------------------------|
 | R1 /login [POST]    |        |                                                                                                                                          |
 |                     | R1.P.1 | The login form can be submitted as a POST request to the current URL (/login)                                                            |
-|                     | R1.P.2 | Email and password both cannot be empty                                                                                                                                                             |
-|                     | R1.P.3 | Email has to follow addr-spec defined in RFC 5322                                                                                                                                                  |
-|                     | R1.P.4 | Password has to meet the required complexity: min lenght 6, at least 1 upper case, at least 1 lower case, at least 1 special char                                                                                 |
-|                     | R1.P.5 | For any formatting errors, render the login page and show the message 'email/password format is incorrect'                                                                                                          |
+|                     | R1.P.2 | Email and password both cannot be empty                                                                                                  |
+|                     | R1.P.3 | Email has to follow addr-spec defined in RFC 5322                                                                                        |
+|                     | R1.P.4 | Password has to meet the required complexity: min lenght 6, at least 1 upper case, at least 1 lower case, at least 1 special char        |
+|                     | R1.P.5 | For any formatting errors, render the login page and show the message 'email/password format is incorrect'                               |
 |                     | R1.P.6 | If the email/password are correct, redirect to /                                                                                         |
 |                     | R1.P.7 | Otherwise, redirect to /login and show message 'email/password combination incorrect'                                                    |
 | R2 /register [POST] |        |                                                                                                                                          |
-|                     | R2.P.1 | The registration form can be submitted as a POST request to the current URL (/register)                                                 |
-|                     | R2.P.2 | Email, password, password2 all have to satisfy the same requirements as defined in R1                                           |
+|                     | R2.P.1 | The registration form can be submitted as a POST request to the current URL (/register)                                                  |
+|                     | R2.P.2 | Email, password, password2 all have to satisfy the same requirements as defined in R1                                                    |
 |                     | R2.P.3 | Password and password2 have to be exactly the same                                                                                       |
 |                     | R2.P.4 | User name has to be non-empty, alphanumeric-only, and space allowed only if it is not the first or the last character.                   |
 |                     | R2.P.5 | User name has to be longer than 2 characters and less than 20 characters.                                                                |
