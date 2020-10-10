@@ -4,11 +4,10 @@ Test data:
 ```python
 test_user = User(
     email='test_frontend@test.com',
-    name='test_frontend',
+    name='testuser',
     password=generate_password_hash('test_frontendA1$')
 )
 ```
-
 
 ## Test Case R1.P.1 - The login form can be submitted as a POST request to the current URL
 
@@ -22,8 +21,8 @@ Actions:
 - open /login
 - enter `test_user`'s email into element `#email`
 - enter `test_user`'s password into element `#password`
-- click element `#btn-submit`
-- validate that a redirect with code 303 has occured
+- click element `input[type="submit"]`
+- validate that no error has occured
 
 ## Test Case R1.P.2 - Email and password both cannot be empty
 
@@ -33,15 +32,15 @@ Note: these checks should be done clientside first, to prevent the client from s
 Actions:
 
 - open /login
-- click element `#btn-submit`
+- click element `input[type="submit"]`
 - validate that there is an `#error` element that contains the message "email/password format is incorrect"
 - open /login
 - enter `test_user`'s email into the element `#email`
-- click element `#btn-submit`
+- click element `input[type="submit"]`
 - validate that there is an `#error` element that contains the message "email/password format is incorrect"
 - open /login
 - enter `test_user`'s password into the element `#password`
-- click element `#btn-submit`
+- click element `input[type="submit"]`
 - validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.3 - Email has to follow addr-spec defined in RFC 5322
@@ -82,7 +81,7 @@ Actions:
 - open /login
 - enter `test_user`'s email into element `#email`
 - enter `test_user`'s password into element `#password`
-- click element `#btn-submit`
+- click element `input[type="submit"]`
 - validate that a redirect to / has occured
 
 ## Test Case R1.P.7 - Otherwise redirect to /login asnd show the message 'email/password combination incorrect'
@@ -96,20 +95,104 @@ Actions:
 - open /login
 - enter `test_user`'s email into element `#email`
 - enter `Password1$` into element `#password`
-- click element `#btn-submit`
+- click element `input[type="submit"]`
 - validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
 - open /login
 - enter `test_user@wrong.com` into element `#email`
 - enter `test_user`'s password into element `#password`
-- click element `#btn-submit`
+- click element `input[type="submit"]`
 - validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
 - open /login
 - enter `wrong@wrong.com` into element `#email`
 - enter `Wrrrr0ng!` into element `#password`
-- click element `#btn-submit`
-- valideate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
+- click element `input[type="submit"]`
+- validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
 
 
+## Test Case R2.P.1 - The registration form can be submitted as a POST request to the current URL
+
+Actions: 
+
+- open /register
+- enter `test_user`'s name into element `#name`
+- enter `test_user`'s email into element `#email`
+- enter `test_user`'s password into element `#password`
+- enter `test_user`'s password into element `#password2`
+- click element `input[type="submit"]`
+- validate that no error has occured
+
+## Test Case R2.P.2 - Email, password, password2 all have to satisfy the same requirements as defined in R1
+
+See R1.P.*, replace `login` with `register` and repeat `password` but replaced with `password2` as well.
+
+## Test case R2.P.3 - Password and password2 have to be exactly the same
+
+Actions:
+
+- open /register
+- enter `test_user`'s name into element `#name`
+- enter `test_user`'s email into element `#email`
+- enter `test_user`'s password into element `#password`
+- enter `notTheS4m3!` into element `#password2`
+- click element `input[type="submit"]`
+- validate that there has been an error message `passwords do not match`
+ 
+## Test case R2.P.4 - Username has to be non-empty, alphanumeric-only, and space allowed if not first or last character
+Note: there seems to be a typo in the original specifications, requiring a redirect to /login rather than /register.
+Actions:
+
+- For the following usernames: `["$+-=", "", " ", " test", "test "]`
+- open /register
+- enter the username into element `#name`
+- enter `test_user`'s email into element `#email`
+- enter `test_user`'s password into element `#password`
+- enter `test_user`'s password into element `#password2`
+- click element `input[type="submit"]`
+- validate that there has been a redirect to /login and an error message `name format is incorredct.`
+
+## Test case R2.P.5 - Username has to be 2>lenght>20
+Note: there seems to be a typo in the original specifications, requiring a redirect to /login rather than /register.
+Actions:
+
+- For the following usernames: `["uu", "12345678901234567890"]`
+- open /register
+- enter the username into element `#name`
+- enter `test_user`'s email into element `#email`
+- enter `test_user`'s password into element `#password`
+- enter `test_user`'s password into element `#password2`
+- click element `input[type="submit"]`
+- validate that there has been a redirect to /login and an error message `name format is incorrect`
+
+## Test case R2.P.6 - if the email already exists, show the message 'this email has been ALREADY used`
+
+Mock:
+
+- Mock `backend.get_user` to return a `test_user` instance 
+
+Action:
+- open /register
+- enter `test_user`'s username into element `#name`
+- enter `test_user`'s email into element `#email`
+- enter `test_user`'s password into element `#password`
+- enter `test_user`'s password into element `#password2`
+- click element `input[type="submit"]`
+- validate that there has been a redirect to /login and an error message `this email has been ALREADY used`
+
+## Test case R2.P.7 - if no error create new user, set balance to 5000, go to /login page
+
+Action: 
+
+- open /register
+- enter `test_user`'s username into element `#name`
+- enter `test_user`'s email into element `#email`
+- enter `test_user`'s password into element `#password`
+- enter `test_user`'s password into element `#password2`
+- click element `input[type="submit"]`
+- validate that we have been redirected to /login.
+- enter `test_user`'s email into element `#email`
+- enter `test_user`'s password into element `#password`
+- click element `input[type="submit"]`
+- verify user balance is 5000.
 # Summary 
 | Target              | ID     | Purpose                                                                                                                                  |
 |---------------------|--------|------------------------------------------------------------------------------------------------------------------------------------------|
@@ -122,8 +205,8 @@ Actions:
 |                     | R1.P.6 | If the email/password are correct, redirect to /                                                                                         |
 |                     | R1.P.7 | Otherwise, redirect to /login and show message 'email/password combination incorrect'                                                    |
 | R2 /register [POST] |        |                                                                                                                                          |
-|                     | R2.P.1 | The registration form can be submitted as a POST request to the current URL (/register)                                                  |
-|                     | R2.P.2 | Email, password, password2 all have to satisfy the same required as defined in R1                                                        |
+|                     | R2.P.1 | The registration form can be submitted as a POST request to the current URL (/register)                                                 |
+|                     | R2.P.2 | Email, password, password2 all have to satisfy the same requirements as defined in R1                                           |
 |                     | R2.P.3 | Password and password2 have to be exactly the same                                                                                       |
 |                     | R2.P.4 | User name has to be non-empty, alphanumeric-only, and space allowed only if it is not the first or the last character.                   |
 |                     | R2.P.5 | User name has to be longer than 2 characters and less than 20 characters.                                                                |
