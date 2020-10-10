@@ -250,7 +250,7 @@ Action:
 - enter `test_user`'s email into element `#email`
 - enter `test_user`'s password into element `#password`
 - click element `input[type="submit"]`
-- verify user balance is 5000.
+- verify we are directed to / and the balance is 5000 .
 
 ## Test Case R7.P.1 - Logout will invalidate the current session and redirect to the login page. After logout the user should not be able to access restricted pages
 
