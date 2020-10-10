@@ -229,4 +229,11 @@ Action:
 |                     | R2.P.8 | If no error regarding the inputs following the rules above, create a new user, set the balance to 5000, and go back to the /login page   |
 | R7 /logout [POST]   | R7.P.1 | Logout will invalid the current session redirect to the login page. After logout, the user shouldn't be able to access restricted pages. |
 
+- How did your team organize the documentations of the test cases (e.g. where did you store the test case markdown file for each team member).
+We followed the format specified in the assingment document.
+As of this commit, we are just making separate branches with our own requirement md files, later when we are all done, we will probably create a docs/requirements folder and add them all into there with proper names, and also create an index file containing all the tables combinined into one.
 
+- Your understanding of how the chosen testing framework works to test the frontend, including your understandings of when and how the test cases will be running directly on GitHub.
+Selenium is a browser automation framework for ui testing. Pytest is a testing framework to actually run the tests. We will use pytest to run the actual tests,which consist of selenium actions
+- How are you going to organize different test case code files? (a folder for a specification?)
+We will probably use a folder per specification. Moving files around later should't be that big of an issue either. 
