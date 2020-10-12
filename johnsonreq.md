@@ -202,7 +202,7 @@ Actions:
 ## Test Case R8.1 - For any other requests except the ones above, the system should return a 404 error 
 
 Actions:
-- open /nonValidRequest
+- open /*
 - validate that you are redirect to /*
 
 # Summary
