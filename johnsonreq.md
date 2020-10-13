@@ -18,6 +18,10 @@ test_ticket = Ticket(
 
 ## Test Case R3.1 - If the user is not logged in, redirect to login page
 
+Mocking:
+
+- Mock backend.get_user to return a test_user instance
+
 Actions: 
 - open /logout (to invalid any logged-in sessions may exist)
 - open /login
