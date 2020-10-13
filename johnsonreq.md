@@ -19,8 +19,12 @@ test_ticket = Ticket(
 ## Test Case R3.1 - If the user is not logged in, redirect to login page
 
 Actions: 
-
-- verify if user has not logged in, if not logged in open /login
+- open /logout (to invalid any logged-in sessions may exist)
+- open /login
+- enter test_user's email into element #email
+- enter test_user's password into element #password
+- click element input[type="submit"]
+- verify if user has not logged in, open /login
 - validate that no error has occured
 
 ## Test Case R3.2 - This page shows a header 'Hi {}'.format(user.name)
