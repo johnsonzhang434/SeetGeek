@@ -207,28 +207,48 @@ Actions:
 - open /
 - validate that the `ticket` has been updated on user profile page
 
-## Test Case R8.1 - For any other requests except the ones above, the system should return a 404 error 
+## Test Case R8.1.1 - For any other requests except the ones above, the system should return a 404 error 
 
 Actions:
 - open /*
 - validate that you are redirect to /*
 
+## Test Case R8.1.2 - For any other requests except the ones above, the system should return a 404 error 
+Mocking:
+
+- Mock backend.get_user to return a test_user instance
+
+Actions:
+
+- open /logout (to invalid any logged-in sessions may exist)
+- open /register
+- open /login
+- enter test_user's email into element #email
+- enter test_user's password into element #password
+- click element input[type="submit"]
+- validate that there is no error and that we are redirected to /
+- open /buy
+- open /sell
+- open /update
+- open /logout
+
+
 # Summary
-|Target  | ID  | Purpose  |
+|Specification | Test case ID  | Purpose  |
 |-|-|-|
-| R3 / [GET]|  | |
-|  |R3.1| If the user is not logged in, redirect to login page |
-|  |R3.2| This page shows a header 'Hi {}'.format(user.name) |
-|  |R3.3| This page shows user balance. |
-|  |R3.4| This page shows a logout link, pointing to /logout |
-|  |R3.5| This page lists all available tickets. Information including the quantity of each ticket, the owner's email, and the price, for tickets that are not expired. |
-|  |R3.6| This page contains a form that a user can submit new tickets for sell. Fields: name, quantity, price, expiration date |
-|  |R3.7| This page contains a form that a user can buy new tickets. Fields: name, quantity |
-|  |R3.8| The ticket-selling form can be posted to /sell |
-|  |R3.9| The ticket-buying form can be posted to /buy |
-|  |R3.10| The ticket-update form can be posted to /update |
-| R8 /* [any]  |  | |
-|  |R8.1| For any other requests except the ones above, the system should return a 404 error |
+|If the user is not logged in, redirect to login page  |R3.1| Check to see if login action failed |
+|This page shows a header 'Hi {}'.format(user.name) |R3.2| Check to see if username formatting has not failed |
+|This page shows user balance.  |R3.3| Check if user balance is displayed on current page  |
+|This page shows a logout link, pointing to /logout  |R3.4| Check if the logout action works correctly |
+|This page lists all available tickets. Information including the quantity of each ticket, the owner's email, and the price, for tickets that are not expired.  |R3.5| Check if tickets are valid/available |
+| This page contains a form that a user can submit new tickets for sell. Fields: name, quantity, price, expiration date  |R3.6| Check if the submit-form is present |
+|This page contains a form that a user can buy new tickets. Fields: name, quantity  |R3.7| Check if a buy-form is present |
+|The ticket-selling form can be posted to /sell  |R3.8| Check if the tickets can be displayed as being sold|
+|The ticket-buying form can be posted to /buy  |R3.9| Check if tickets can be displayed as being bought|
+|The ticket-update form can be posted to /update  |R3.10| Check if tickets can be displayed as updated |
+| | |
+|For any other requests except the ones above, the system should return a 404 error  |R8.1.1| Check if an invalid request returns 404 error |
+|For any other requests except the ones above, the system should return a 404 error |R8.1.2| Check if valid requests won't return 404 error|
 
 - How did your team organize the documentations of the test cases (e.g. where did you store the test case markdown file for each team member).
   
