@@ -212,7 +212,7 @@ Actions:
 
 Actions:
 - open /*
-- validate that you are redirect to /*
+- validate that you are redirected to `404 error page`.
 
 ## Test Case R8.1.2 - For any other requests except the ones above, the system should return a 404 error 
 Mocking:
