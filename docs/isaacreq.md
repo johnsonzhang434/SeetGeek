@@ -22,26 +22,37 @@ Actions:
 - enter `test_user`'s email into element `#email`
 - enter `test_user`'s password into element `#password`
 - click element `input[type="submit"]`
-- validate that no error has occured
+- validate that no error has occured (400s/500s errors, etc)
 
-## Test Case R1.P.2 - Email and password both cannot be empty
+## Test Case R1.P.2.1 - Email and password both cannot be empty
 
 Note: these checks should be done clientside first, to prevent the client from sending pointless requests that will obviously return an error. The server should just return a generic "incorrect username and password" when a invalid request is manually submitted. 
-
 
 Actions:
 
 - open /login
 - click element `input[type="submit"]`
 - validate that there is an `#error` element that contains the message "email/password format is incorrect"
+
+## Test Case R1.P.2.2 - Password cannot be empty
+
+Actions: 
 - open /login
 - enter `test_user`'s email into the element `#email`
 - click element `input[type="submit"]`
 - validate that there is an `#error` element that contains the message "email/password format is incorrect"
+ 
+## Test Case R1.P.2.3 - Email cannot be empty
+
+Actions: 
 - open /login
 - enter `test_user`'s password into the element `#password`
 - click element `input[type="submit"]`
 - validate that there is an `#error` element that contains the message "email/password format is incorrect"
+
+## Test Case R1.P.2.4 - Both are not empty 
+
+Actions: 
 - open /login
 - enter `test_user`'s email into the element `#email`
 - enter `test_user`'s password into the element `#password`
@@ -100,7 +111,7 @@ Actions:
 - click element `input[type="submit"]`
 - validate that a redirect to / has occured
 
-## Test Case R1.P.7 - Otherwise redirect to /login asnd show the message 'email/password combination incorrect'
+## Test Case R1.P.7.1 - incorrect password 
 
 Mock:
 
@@ -113,22 +124,32 @@ Actions:
 - enter `Password1$` into element `#password`
 - click element `input[type="submit"]`
 - validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
+
+## Test Case R1.P.7.2 - incorrect email
+
+Mock:
+
+- Mock `backend.get_user` to return a `test_user` instance 
+
+Actions: 
 - open /login
 - enter `test_user@wrong.com` into element `#email`
 - enter `test_user`'s password into element `#password`
 - click element `input[type="submit"]`
 - validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
+
+## Test Case R1.P.7.3 - incorrect both email and password
+
+Mock:
+
+- Mock `backend.get_user` to return a `test_user` instance 
+
+Actions: 
 - open /login
 - enter `wrong@wrong.com` into element `#email`
 - enter `Wrrrr0ng!` into element `#password`
 - click element `input[type="submit"]`
 - validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
-- open /login 
-- enter `test_user`'s email into element `#email`
-- enter `test_user`'s password into element `#password`
-- click element `input[type="submit"]`
-- validate that we have been redirected to / without error
-
 
 ## Test Case R2.P.1 - The registration form can be submitted as a POST request to the current URL
 
@@ -145,8 +166,9 @@ Actions:
 ## Test Case R2.P.2 - Email, password, password2 all have to satisfy the same requirements as defined in R1
 
 See R1.P.*, replace `login` with `register` and repeat `password` but replaced with `password2` as well.
+It's better to do this instead of just copying and pasting the documentation since we can find references to the tests that we copied, in the future in case we change those. If we just copied the text, we would have to also remember which tests were similar to other tests, which will probbably lead to us forgetting something.
 
-## Test case R2.P.3 - Password and password2 have to be exactly the same
+## Test case R2.P.3.1 - Password and password2 are not the same
 
 Actions:
 
@@ -157,6 +179,10 @@ Actions:
 - enter `notTheS4m3!` into element `#password2`
 - click element `input[type="submit"]`
 - validate that there has been an error message `passwords do not match`
+
+## Test case R2.P.3.2 - Password and password2 are the same
+
+Actions:
 
 - open /register
 - enter `test_user`'s name into element `#name`
@@ -266,26 +292,25 @@ Action:
 
 
 # Summary 
-| Target              | ID     | Purpose                                                                                                                                  |
-|---------------------|--------|------------------------------------------------------------------------------------------------------------------------------------------|
-| R1 /login [POST]    |        |                                                                                                                                          |
-|                     | R1.P.1 | The login form can be submitted as a POST request to the current URL (/login)                                                            |
-|                     | R1.P.2 | Email and password both cannot be empty                                                                                                  |
-|                     | R1.P.3 | Email has to follow addr-spec defined in RFC 5322                                                                                        |
-|                     | R1.P.4 | Password has to meet the required complexity: min lenght 6, at least 1 upper case, at least 1 lower case, at least 1 special char        |
-|                     | R1.P.5 | For any formatting errors, render the login page and show the message 'email/password format is incorrect'                               |
-|                     | R1.P.6 | If the email/password are correct, redirect to /                                                                                         |
-|                     | R1.P.7 | Otherwise, redirect to /login and show message 'email/password combination incorrect'                                                    |
-| R2 /register [POST] |        |                                                                                                                                          |
-|                     | R2.P.1 | The registration form can be submitted as a POST request to the current URL (/register)                                                  |
-|                     | R2.P.2 | Email, password, password2 all have to satisfy the same requirements as defined in R1                                                    |
-|                     | R2.P.3 | Password and password2 have to be exactly the same                                                                                       |
-|                     | R2.P.4 | User name has to be non-empty, alphanumeric-only, and space allowed only if it is not the first or the last character.                   |
-|                     | R2.P.5 | User name has to be longer than 2 characters and less than 20 characters.                                                                |
-|                     | R2.P.6 | For any formatting errors, redirect back to /login and show message '{} format is incorrect.'.format(the_corresponding_attribute)        |
-|                     | R2.P.7 | If the email already exists, show message 'this email has been ALREADY used'                                                             |
-|                     | R2.P.8 | If no error regarding the inputs following the rules above, create a new user, set the balance to 5000, and go back to the /login page   |
-| R7 /logout [POST]   | R7.P.1 | Logout will invalid the current session redirect to the login page. After logout, the user shouldn't be able to access restricted pages. |
+| Specification                                                                 | ID     | Purpose                                                                                                                                  |
+|-------------------------------------------------------------------------------|--------|------------------------------------------------------------------------------------------------------------------------------------------|
+| The login form can be submitted as a POST request to the current URL (/login) | R1.P.1 | To see if the login form can be submitted as a post request                                                                              |
+| Email and password both cannot be empty                                       |        |                                                                                                                                          |
+|                                                                               | R1.P.3 | Email has to follow addr-spec defined in RFC 5322                                                                                        |
+|                                                                               | R1.P.4 | Password has to meet the required complexity: min lenght 6, at least 1 upper case, at least 1 lower case, at least 1 special char        |
+|                                                                               | R1.P.5 | For any formatting errors, render the login page and show the message 'email/password format is incorrect'                               |
+|                                                                               | R1.P.6 | If the email/password are correct, redirect to /                                                                                         |
+|                                                                               | R1.P.7 | Otherwise, redirect to /login and show message 'email/password combination incorrect'                                                    |
+| R2 /register [POST]                                                           |        |                                                                                                                                          |
+|                                                                               | R2.P.1 | The registration form can be submitted as a POST request to the current URL (/register)                                                  |
+|                                                                               | R2.P.2 | Email, password, password2 all have to satisfy the same requirements as defined in R1                                                    |
+|                                                                               | R2.P.3 | Password and password2 have to be exactly the same                                                                                       |
+|                                                                               | R2.P.4 | User name has to be non-empty, alphanumeric-only, and space allowed only if it is not the first or the last character.                   |
+|                                                                               | R2.P.5 | User name has to be longer than 2 characters and less than 20 characters.                                                                |
+|                                                                               | R2.P.6 | For any formatting errors, redirect back to /login and show message '{} format is incorrect.'.format(the_corresponding_attribute)        |
+|                                                                               | R2.P.7 | If the email already exists, show message 'this email has been ALREADY used'                                                             |
+|                                                                               | R2.P.8 | If no error regarding the inputs following the rules above, create a new user, set the balance to 5000, and go back to the /login page   |
+| R7 /logout [POST]                                                             | R7.P.1 | Logout will invalid the current session redirect to the login page. After logout, the user shouldn't be able to access restricted pages. |
 
 - How did your team organize the documentations of the test cases (e.g. where did you store the test case markdown file for each team member).
 We followed the format specified in the assingment document.
