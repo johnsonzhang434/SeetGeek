@@ -1,3 +1,20 @@
+Test Data:
+```
+test_user = User(
+    email='test_frontend@test.com',
+    name='test_frontend',
+    password=generate_password_hash('test_frontend')
+)
+
+test_ticket = Ticket(
+    owner='test_frontend@test.com',
+    name='test_ticket_yo',
+    quantity=10,
+    price=10,
+    date='20200901'
+)
+```
+
 #### Test case R1.1 - If the user hasn't logged in, show the login page
 
 Actions:
@@ -74,6 +91,35 @@ Actions:
 
 #### Test case R4.1 - The name of the ticket has to be alphanumeric-only, and space allowed only if it is not the first or the last character.
 
+Additional Test Data:
+
+```
+
+test_ticket = Ticket(
+    owner='test_frontend@test.com',
+    name='test:ticket:yo',
+    quantity=10,
+    price=10,
+    date='20200901'
+)
+
+test_ticket = Ticket(
+    owner='test_frontend@test.com',
+    name='test ticket yo',
+    quantity=10,
+    price=10,
+    date='20200901'
+)
+
+test_ticket = Ticket(
+    owner='test_frontend@test.com',
+    name=' test_ticket_yo',
+    quantity=10,
+    price=10,
+    date='20200901'
+)
+```
+
 Mocking:
  - Mock backend.get_user to return a test_user instance
  - Mock backend.get_all_tickets to return a test_tickets instance
@@ -90,6 +136,18 @@ Actions:
  - validate that the ticket name attribute value does not begin or end with a space
 
 #### Test case R4.2 - The name of the ticket is no longer than 60 characters
+
+Additional Test Data:
+
+```
+test_ticket = Ticket(
+    owner='test_frontend@test.com',
+    name='TheNameOfThisTicketHasMoreThanSixtyCharacters01234567890123456789',
+    quantity=10,
+    price=10,
+    date='20200901'
+)
+```
 
 Mocking:
  - Mock backend.get_user to return a test_user instance
@@ -108,6 +166,26 @@ Actions:
 
 #### Test case R4.3 - The quantity of the tickets has to be more than 0, and less than or equal to 100.
 
+Additional Test Data:
+
+```
+test_ticket = Ticket(
+    owner='test_frontend@test.com',
+    name='test_ticket_yo',
+    quantity=0,
+    price=10,
+    date='20200901'
+)
+
+test_ticket = Ticket(
+    owner='test_frontend@test.com',
+    name='test_ticket_yo',
+    quantity=200,
+    price=10,
+    date='20200901'
+)
+```
+
 Mocking:
  - Mock backend.get_user to return a test_user instance
  - Mock backend.get_all_tickets to return a test_tickets instance
@@ -125,6 +203,26 @@ Actions:
 
 #### Test case R4.4 - Price has to be of range [10, 100]
 
+Additional Test Data:
+
+```
+test_ticket = Ticket(
+    owner='test_frontend@test.com',
+    name='test_ticket_yo',
+    quantity=10,
+    price=5,
+    date='20200901'
+)
+
+test_ticket = Ticket(
+    owner='test_frontend@test.com',
+    name='test_ticket_yo',
+    quantity=10,
+    price=500,
+    date='20200901'
+)
+```
+
 Mocking:
  - Mock backend.get_user to return a test_user instance
  - Mock backend.get_all_tickets to return a test_tickets instance
@@ -141,6 +239,25 @@ Actions:
 
 
 #### Test case R4.5 - Date must be given in the format YYYYMMDD (e.g. 20200901)
+
+Additional Test Data:
+```
+test_ticket = Ticket(
+    owner='test_frontend@test.com',
+    name='test_ticket_yo',
+    quantity=10,
+    price=10,
+    date='20200901000000'
+)
+
+test_ticket = Ticket(
+    owner='test_frontend@test.com',
+    name='test_ticket_yo',
+    quantity=10,
+    price=10,
+    date='20200901testing'
+)
+```
 
 Mocking:
  - Mock backend.get_user to return a test_user instance
