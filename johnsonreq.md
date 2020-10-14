@@ -85,7 +85,7 @@ Actions:
 Mocking:
 
 - Mock backend.get_user to return a test_user instance
-- Mock backend.get_availableTicket to return ticket instance
+- Mock backend.get_ticket to return ticket instance
 
 Actions:
 
@@ -120,7 +120,7 @@ Actions:
 Mocking:
 
 - Mock backend.get_user to return a test_user instance
-- Mock backend.get_test_ticket to return test_ ticket instance
+- Mock backend.get_ticket to return ticket instance
 
 Actions:
 
@@ -137,7 +137,7 @@ Actions:
 Mocking:
 
 - Mock backend.get_user to return a test_user instance
-- Mock backend.get_test_ticket to return test_ ticket instance
+- Mock backend.get_ticket to return ticket instance
 
 Actions:
 
@@ -163,7 +163,7 @@ Actions:
 Mocking:
 
 - Mock backend.get_user to return a test_user instance
-- Mock backend.get_test_ticket to return test_ ticket instance
+- Mock backend.get_ticket to return ticket instance
 
 Actions:
 
@@ -187,7 +187,7 @@ Actions:
 Mocking:
 
 - Mock backend.get_user to return a test_user instance
-- Mock backend.get_test_ticket to return test_ ticket instance
+- Mock backend.get_ticket to return ticket instance
 
 Actions:
 
