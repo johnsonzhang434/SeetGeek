@@ -9,9 +9,10 @@ test_user = User(
 
 ```python
 test_ticket = Ticket(
-    name='test_frontend',
-    price=random.randint(10,100)
-    quantity=random.randint(0,100)
+    owner='test_frontend@test.com',
+    name='test_ticket_yo',
+    quantity=10,
+    price=10,
     date='20200901'
 )
 ```
