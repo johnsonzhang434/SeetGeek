@@ -78,7 +78,7 @@ def register_user(email, name, password, password2):
     if not validate_username(name):
         errors.add("username format is incorrect")
 
-    user = bn.get_user(email)
+    user = get_user(email)
     if user:
         errors.add("this email has been ALREADY used")
 
