@@ -49,14 +49,15 @@ def register_post():
 
 @app.route('/login', methods=['GET'])
 def login_get():
-    # redirect to home page or login page, depending on whether user is or isn't already logged in
-    if 'logged_in' in session:
-        return redirect('/')
     return render_template('login.html', message='Please login')
 
 
 @app.route('/login', methods=['POST'])
 def login_post():
+    # user is already logged in- redirect to '/'
+    if 'logged_in' in session:
+        return redirect('/', code=303)
+
     email = request.form.get('email')
     password = request.form.get('password')
     user = bn.login_user(email, password)

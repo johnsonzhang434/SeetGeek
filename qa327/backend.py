@@ -16,10 +16,10 @@ def get_user(email):
     return user
 
 def validate_email(email):
-    return "email errors here"
+    return "email error"
 
 def validate_password(password):
-    return "password errors here"
+    return "password error"
 
 def login_user(email, password):
     """
