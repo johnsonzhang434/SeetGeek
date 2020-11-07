@@ -6,7 +6,7 @@ import qa327.backend as bn
 This file defines the front-end part of the service.
 It elaborates how the services should handle different
 http requests from the client (browser) through templating.
-The html templates are stored in the 'templates' folder. 
+The html templates are stored in the 'templates' folder.
 """
 
 
@@ -44,9 +44,9 @@ def login_get():
 	msg = request.args.get('msg')
 	if msg:
 		return render_template('login.html', message=msg)
-    if 'logged_in' in session:
-	return redirect('/')
-    return render_template('login.html', message='Please login')
+	if 'logged_in' in session:
+		return redirect('/')
+	return render_template('login.html', message='Please login')
 
 
 @app.route('/login', methods=['POST'])
@@ -60,24 +60,24 @@ def login_post():
 		return render_template('login.html', message=user) # return error message
 
     # email and password are non-empty
-    if user:
-	session['logged_in'] = user.email
-	"""
-	Session is an object that contains sharing information 
-	between browser and the end server. Typically it is encrypted 
-	and stored in the browser cookies. They will be past 
-	along between every request the browser made to this services.
+	if user:
+		session['logged_in'] = user.email
+		"""
+		Session is an object that contains sharing information 
+		between browser and the end server. Typically it is encrypted 
+		and stored in the browser cookies. They will be past 
+		along between every request the browser made to this services.
 
-	Here we store the user object into the session, so we can tell
-	if the client has already login in the following sessions.
+		Here we store the user object into the session, so we can tell
+		if the client has already login in the following sessions.
 
-	"""
-	# success! go back to the home page
-	# code 303 is to force a 'GET' request
-	return redirect('/', code=303)
-    else:
-	# if error present in email or password, return list of errors
-	return render_template('login.html', message='Email/password combination incorrect')
+		"""
+		# success! go back to the home page
+		# code 303 is to force a 'GET' request
+		return redirect('/', code=303)
+	else:
+		# if error present in email or password, return list of errors
+		return render_template('login.html', message='Email/password combination incorrect')
 
 
 @app.route('/logout')
@@ -91,7 +91,7 @@ def authenticate(inner_function):
 	"""
 	:param inner_function: any python function that accepts a user object
 
-	Wrap any python function and check the current session to see if 
+	Wrap any python function and check the current session to see if
 	the user has logged in. If login, it will call the inner_function
 	with the logged in user object.
 
