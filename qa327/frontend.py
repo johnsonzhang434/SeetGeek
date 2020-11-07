@@ -40,44 +40,44 @@ def register_post():
 
 @app.route('/login', methods=['GET'])
 def login_get():
-    # redirect to home page or login page, depending on whether user is or isn't already logged in
-    msg = request.args.get('msg')
+	# redirect to home page or login page, depending on whether user is or isn't already logged in
+	msg = request.args.get('msg')
 	if msg:
-    	return render_template('login.html', message=msg)
+		return render_template('login.html', message=msg)
     if 'logged_in' in session:
-        return redirect('/')
+	return redirect('/')
     return render_template('login.html', message='Please login')
 
 
 @app.route('/login', methods=['POST'])
 def login_post():
-    email = request.form.get('email')
-    password = request.form.get('password')
-    user = bn.login_user(email, password)
+	email = request.form.get('email')
+	password = request.form.get('password')
+	user = bn.login_user(email, password)
 
-    # If login_user() returns a string
-    if isinstance(user, str):
-        return render_template('login.html', message=user) # return error message
+	# If login_user() returns a string
+	if isinstance(user, str):
+		return render_template('login.html', message=user) # return error message
 
     # email and password are non-empty
     if user:
-        session['logged_in'] = user.email
-        """
-        Session is an object that contains sharing information 
-        between browser and the end server. Typically it is encrypted 
-        and stored in the browser cookies. They will be past 
-        along between every request the browser made to this services.
+	session['logged_in'] = user.email
+	"""
+	Session is an object that contains sharing information 
+	between browser and the end server. Typically it is encrypted 
+	and stored in the browser cookies. They will be past 
+	along between every request the browser made to this services.
 
-        Here we store the user object into the session, so we can tell
-        if the client has already login in the following sessions.
+	Here we store the user object into the session, so we can tell
+	if the client has already login in the following sessions.
 
-        """
-        # success! go back to the home page
-        # code 303 is to force a 'GET' request
-        return redirect('/', code=303)
+	"""
+	# success! go back to the home page
+	# code 303 is to force a 'GET' request
+	return redirect('/', code=303)
     else:
-        # if error present in email or password, return list of errors
-        return render_template('login.html', message='Email/password combination incorrect')
+	# if error present in email or password, return list of errors
+	return render_template('login.html', message='Email/password combination incorrect')
 
 
 @app.route('/logout')
