@@ -61,13 +61,12 @@ def login_post():
     password = request.form.get('password')
     user = bn.login_user(email, password)
 
+    # If login_user() returns a string
+    if isinstance(user, str):
+        return render_template('login.html', message=user) # return error message
+
     # email and password are non-empty
     if user:
-        # if error present in email or password
-        if user != bn.get_user(email):
-            # return list of errors
-            return render_template('login.html', message=user)
-
         session['logged_in'] = user.email
         """
         Session is an object that contains sharing information 
@@ -83,6 +82,7 @@ def login_post():
         # code 303 is to force a 'GET' request
         return redirect('/', code=303)
     else:
+        # if error present in email or password, return list of errors
         return render_template('login.html', message='Email/password combination incorrect')
 
 @app.route('/logout')
