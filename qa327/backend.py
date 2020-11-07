@@ -1,20 +1,28 @@
 from qa327.models import db, User
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import re
 """
 This file defines all backend logic that interacts with database and other services
 """
 def validate_email(email):
     """
     Validate that email follows RFC 5322
+    see stackoverflow for explanation https://stackoverflow.com/questions/201323/how-to-validate-an-email-address-using-a-regular-expression
     """
-    return True
+    return re.fullmatch(r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])`'])`'])", email)
 
 def validate_password(password):
     """
     Validate that password is valid
     """
-    return True
+    # min length 6
+    if len(password) < 6:
+        return False
+    # at least one upper and one lower 
+    if password.isupper() or password.islower():
+        return False
+    # any special character
+    return any(c for c in password if not c.isalnum() and not c.isspace())
 
 def validate_username(name):
     """
@@ -67,25 +75,25 @@ def register_user(email, name, password, password2):
     :return: an error message if there is any, or None if register succeeds
     """
     errors = []
-
+    # checks if email is valid format
     if not validate_email(email):
-        errors.add("email format is incorrect")
-
+        errors.append("email format is incorrect")
+    # checks if password is valid format
     if not validate_password(password):
-        errors.add("password format is incorrect")
-
+        errors.append("password format is incorrect")
+    # checks if passwords match
     if password != password2:
-        errors.add("passwords do not match")
-
+        errors.append("passwords do not match")
+    # chechs if username has valid formats
     if not validate_username(name):
-        errors.add("username format is incorrect")
-
+        errors.append("username format is incorrect")
+    # check if email has been used before
     user = get_user(email)
     if user:
-        errors.add("this email has been ALREADY used")
-
+        errors.append("this email has been ALREADY used")
+    # generate password hash 
     hashed_pw = generate_password_hash(password, method='sha256')
-
+    # do not create user if there are any errorsx
     if len(errors) > 0:
         return errors
 
@@ -94,7 +102,7 @@ def register_user(email, name, password, password2):
 
     db.session.add(new_user)
     db.session.commit()
-    return errors
+    return [] # no errors
 
 
 def get_all_tickets():
