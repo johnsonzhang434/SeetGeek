@@ -15,11 +15,6 @@ def get_user(email):
     user = User.query.filter_by(email=email).first()
     return user
 
-def validate_email(email):
-    return "email error"
-
-def validate_password(password):
-    return "password error"
 
 def login_user(email, password):
     """
@@ -28,14 +23,10 @@ def login_user(email, password):
     :param password: the password input
     :return: the user if login succeeds
     """
-
     # if this returns a user, then the name already exists in database
     user = get_user(email)
     if not user or not check_password_hash(user.password, password):
         return None
-    # Validate email and password, then return string explaining errors present
-    elif not validate_email(email) or not validate_password(password):
-        return "Email/password format is incorrect: " + validate_email(email) + validate_password(password)
     return user
 
 
