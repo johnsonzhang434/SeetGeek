@@ -82,4 +82,4 @@ class FrontEndHomePageTest(BaseCase):
         self.click('input[type="submit"]')
         # make sure it shows proper error message
         self.assert_element("#message")
-        self.assert_text("Email/password combination incorrect", "#message")
+        self.assert_text("Email/password format is incorrect.", "#message")
