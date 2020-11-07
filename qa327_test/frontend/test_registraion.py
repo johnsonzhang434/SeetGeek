@@ -65,7 +65,7 @@ class FrontEndHomePageTest(BaseCase):
         self.open(base_url)
         # test if the page loads correctly
         self.assert_element("#welcome-header")
-        self.assert_text("Welcome test_frontend", "#welcome-header")
+        self.assert_text("Hi test_frontend", "#welcome-header")
         self.assert_element("#tickets div h4")
         self.assert_text("t1 100", "#tickets div h4")
 
