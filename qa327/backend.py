@@ -40,7 +40,6 @@ def get_user(email):
     user = User.query.filter_by(email=email).first()
     return user
 
-
 def login_user(email, password):
     """
     Check user authentication by comparing the password
@@ -50,7 +49,10 @@ def login_user(email, password):
     """
     # if this returns a user, then the name already exists in database
     user = get_user(email)
-    if not user or not check_password_hash(user.password, password):
+    # Validate email and password, then return string explaining errors present
+    if not validate_email(email) or not validate_password(password):
+        return "Email/password format is incorrect."
+    elif not user or not check_password_hash(user.password, password):
         return None
     return user
 

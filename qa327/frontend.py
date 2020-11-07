@@ -6,7 +6,7 @@ import qa327.backend as bn
 This file defines the front-end part of the service.
 It elaborates how the services should handle different
 http requests from the client (browser) through templating.
-The html templates are stored in the 'templates' folder. 
+The html templates are stored in the 'templates' folder.
 """
 
 
@@ -40,8 +40,13 @@ def register_post():
 
 @app.route('/login', methods=['GET'])
 def login_get():
+	# redirect to home page or login page, depending on whether user is or isn't already logged in
 	msg = request.args.get('msg')
-	return render_template('login.html', message=msg)
+	if msg:
+		return render_template('login.html', message=msg)
+	if 'logged_in' in session:
+		return redirect('/')
+	return render_template('login.html', message='Please login')
 
 
 @app.route('/login', methods=['POST'])
@@ -49,6 +54,12 @@ def login_post():
 	email = request.form.get('email')
 	password = request.form.get('password')
 	user = bn.login_user(email, password)
+
+	# If login_user() returns a string
+	if isinstance(user, str):
+		return render_template('login.html', message=user) # return error message
+
+    # email and password are non-empty
 	if user:
 		session['logged_in'] = user.email
 		"""
@@ -65,7 +76,8 @@ def login_post():
 		# code 303 is to force a 'GET' request
 		return redirect('/', code=303)
 	else:
-		return render_template('login.html', message='login failed')
+		# if error present in email or password, return list of errors
+		return render_template('login.html', message='Email/password combination incorrect')
 
 
 @app.route('/logout')
@@ -79,7 +91,7 @@ def authenticate(inner_function):
 	"""
 	:param inner_function: any python function that accepts a user object
 
-	Wrap any python function and check the current session to see if 
+	Wrap any python function and check the current session to see if
 	the user has logged in. If login, it will call the inner_function
 	with the logged in user object.
 
