@@ -1,6 +1,6 @@
 from qa327.models import db, User
 from werkzeug.security import generate_password_hash, check_password_hash
-from email_validator import validate_email, EmailNotValidError
+from email_validator import validate_email as val_e, EmailNotValidError
 
 """
 This file defines all backend logic that interacts with database and other services
@@ -8,9 +8,11 @@ This file defines all backend logic that interacts with database and other servi
 def validate_email(email):
     """
     Validate that email follows RFC 5322
+    :param email: email to be validated
+    :return: boolean, valid or not
     """
     try:
-        validate_email(email)
+        val_e(email)
         return True
     except EmailNotValidError as e :
         return False
@@ -19,6 +21,8 @@ def validate_email(email):
 def validate_password(password):
     """
     Validate that password is valid
+    :param password: password to be validated
+    :return: boolean, valid or not
     """
     # min length 6
     if len(password) < 6:
@@ -31,7 +35,9 @@ def validate_password(password):
 
 def validate_username(name):
     """
-    Validate that password is valid
+    Validate that name is valid
+    :param name: name to be validated
+    :return: boolean, valid or not
     """
     # not empty 
     if len(name) <= 0:
