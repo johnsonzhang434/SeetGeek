@@ -1,4 +1,4 @@
-from flask import render_template, request, session, redirect
+from flask import render_template, request, session, redirect, url_for
 from qa327 import app
 import qa327.backend as bn
 
@@ -13,6 +13,10 @@ The html templates are stored in the 'templates' folder.
 @app.route('/register', methods=['GET'])
 def register_get():
     # templates are stored in the templates folder
+    #if user has logged in, redirect back to the user profile page /
+    if 'logged_in' in session:
+        return redirect('/')
+    #else show the user registration page
     return render_template('register.html', message='')
 
 
@@ -23,16 +27,16 @@ def register_post():
     password = request.form.get('password')
     password2 = request.form.get('password2')
     error_message = None
-
+    format_message = 'Please Login'
 
     if password != password2:
-        error_message = "The passwords do not match"
+        format_message = "The passwords do not match"
 
     elif len(email) < 1:
-        error_message = "Email format error"
+        format_message = "Email format error"
 
     elif len(password) < 1:
-        error_message = "Password not strong enough"
+        format_message = "Password not strong enough"
     else:
         user = bn.get_user(email)
         if user:
@@ -43,13 +47,16 @@ def register_post():
     # at the backend, go back to the register page.
     if error_message:
         return render_template('register.html', message=error_message)
+    elif format_message:
+        return redirect(url_for('.login_get', msg = format_message))
     else:
         return redirect('/login')
 
 
 @app.route('/login', methods=['GET'])
 def login_get():
-    return render_template('login.html', message='Please login')
+    msg = request.args.get('msg')
+    return render_template('login.html', message=msg)
 
 
 @app.route('/login', methods=['POST'])
@@ -116,6 +123,9 @@ def authenticate(inner_function):
     # return the wrapped version of the inner_function:
     return wrapped_inner
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html', message = '404 Error')
 
 @app.route('/')
 @authenticate
