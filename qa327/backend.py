@@ -1,5 +1,6 @@
 from qa327.models import db, User
 from werkzeug.security import generate_password_hash, check_password_hash
+from email_validator import validate_email as val_e, EmailNotValidError
 
 """
 This file defines all backend logic that interacts with database and other services
@@ -7,18 +8,36 @@ This file defines all backend logic that interacts with database and other servi
 def validate_email(email):
     """
     Validate that email follows RFC 5322
+    :param email: email to be validated
+    :return: boolean, valid or not
     """
-    return True
+    try:
+        val_e(email)
+        return True
+    except EmailNotValidError as e :
+        return False
+
 
 def validate_password(password):
     """
     Validate that password is valid
+    :param password: password to be validated
+    :return: boolean, valid or not
     """
-    return True
+    # min length 6
+    if len(password) < 6:
+        return False
+    # at least one upper and one lower 
+    if password.isupper() or password.islower():
+        return False
+    # any special character
+    return any(c for c in password if not c.isalnum() and not c.isspace())
 
 def validate_username(name):
     """
-    Validate that password is valid
+    Validate that name is valid
+    :param name: name to be validated
+    :return: boolean, valid or not
     """
     # not empty 
     if len(name) <= 0:
@@ -67,34 +86,34 @@ def register_user(email, name, password, password2):
     :return: an error message if there is any, or None if register succeeds
     """
     errors = []
-
+    # checks if email is valid format
     if not validate_email(email):
-        errors.add("email format is incorrect")
-
+        errors.append("email format is incorrect")
+    # checks if password is valid format
     if not validate_password(password):
-        errors.add("password format is incorrect")
-
+        errors.append("password format is incorrect")
+    # checks if passwords match
     if password != password2:
-        errors.add("passwords do not match")
-
+        errors.append("passwords do not match")
+    # chechs if username has valid formats
     if not validate_username(name):
-        errors.add("username format is incorrect")
-
+        errors.append("username format is incorrect")
+    # check if email has been used before
     user = get_user(email)
     if user:
-        errors.add("this email has been ALREADY used")
-
+        errors.append("this email has been ALREADY used")
+    # generate password hash 
     hashed_pw = generate_password_hash(password, method='sha256')
-
+    # do not create user if there are any errorsx
     if len(errors) > 0:
         return errors
 
     # store the encrypted password rather than the plain password
-    new_user = User(email=email, name=name, password=hashed_pw, balance=5000)
+    new_user = User(email=email, name=name, password=hashed_pw, balance=5000.0)
 
     db.session.add(new_user)
     db.session.commit()
-    return errors
+    return [] # no errors
 
 
 def get_all_tickets():

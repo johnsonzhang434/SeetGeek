@@ -36,9 +36,7 @@ def register_post():
 	if len(elist) > 0:
 		return redirect(url_for('.login_get', msg=elist[0]))
 	else:
-		# else if no errors, just redirect to login page and display 'Please Login'
-		return redirect('/login', message='Please Login')
-
+		return redirect(url_for('.login_get', msg='Please Login'))
 
 @app.route('/login', methods=['GET'])
 def login_get():
