@@ -12,7 +12,6 @@ The html templates are stored in the 'templates' folder.
 
 @app.route('/register', methods=['GET'])
 def register_get():
-	# templates are stored in the templates folder
 	# if user has logged in, redirect back to the user profile page /
 	if 'logged_in' in session:
 		return redirect('/')
@@ -27,11 +26,13 @@ def register_post():
 	password = request.form.get('password')
 	password2 = request.form.get('password2')
 
-	# List of errors returned from register_user
+	# get the List of errors returned from the backend function: register_user 
+	# store the returned list in elist
 	elist = bn.register_user(email, name, password, password2)
 
 	# if there is any error messages when registering new user
-	# at the backend, go back to the register page.
+	# at the backend, redirect user to login page  
+	# display the first error message on the login page.
 	if len(elist) > 0:
 		return redirect(url_for('.login_get', msg=elist[0]))
 	else:
@@ -40,7 +41,9 @@ def register_post():
 @app.route('/login', methods=['GET'])
 def login_get():
 	# redirect to home page or login page, depending on whether user is or isn't already logged in
+	# Get any messages passed through this route and store in msg
 	msg = request.args.get('msg')
+	#if there are any error messages, display them
 	if msg:
 		return render_template('login.html', message=msg)
 	if 'logged_in' in session:
@@ -119,7 +122,8 @@ def authenticate(inner_function):
 	# return the wrapped version of the inner_function:
 	return wrapped_inner
 
-
+#If any other redirects are made other than: /logout, /, /register, /login,
+#/sell, /buy,/update, then Redirect to 404 error page
 @app.errorhandler(404)
 def page_not_found(e):
 	return render_template('404.html', message='404 Error')
