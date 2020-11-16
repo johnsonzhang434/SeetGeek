@@ -40,7 +40,7 @@ Actions:
 - open /login
 - enter `test_user`'s email into the element `#email`
 - click element `input[type="submit"]`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.2.3 - Email cannot be empty
 
@@ -48,7 +48,7 @@ Actions:
 - open /login
 - enter `test_user`'s password into the element `#password`
 - click element `input[type="submit"]`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.2.4 - Both are not empty 
 
@@ -69,7 +69,7 @@ Actions:
 - open /login 
 - Enter email in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.3.2 - Local part has illegal characters 
 
@@ -79,7 +79,7 @@ Actions:
 - open /login 
 - Enter email in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#error` element that contains the message "email/password format is incorrect
+- validate that there is an `#message` element that contains the message "email/password format is incorrect
 
 
 
@@ -100,7 +100,7 @@ Actions:
 - open /login 
 - Enter `12345678901234567890123456789012345678901234567890123456789012341234567890123456789012345678901234567890123456789012345678901234@test.com`in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.3.5 - "." cannot be consecutive or at the start or end.
 
@@ -110,7 +110,7 @@ Actions:
 - open /login 
 - Enter email in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.4.1 - Password too short
 
@@ -121,7 +121,7 @@ Actions:
 - open /login
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter `a1A!` into element `#password`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.4.2 - Password missing special 
 
@@ -132,7 +132,7 @@ Actions:
 - open /login
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter aaaAAA111 into element `#password`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.4.3 - Missing number 
 
@@ -143,7 +143,7 @@ Actions:
 - open /login
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter `aaaAAA!!!!` into element `#password`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 
 
@@ -156,7 +156,7 @@ Actions:
 - open /login
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter AAAA1111!!!! into element `#password`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.4.5 - missing uppercase 
 
@@ -167,7 +167,7 @@ Actions:
 - open /login
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter `aaa111!!!!` into element `#password`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.4.6 - Valid passwords work
 
@@ -213,7 +213,7 @@ Actions:
 - enter `test_user`'s email into element `#email`
 - enter `Password1$` into element `#password`
 - click element `input[type="submit"]`
-- validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
+- validate that we have been redirected to /login and there is an element `#message` that says "email/password combination incorrect"
 
 ## Test Case R1.P.7.2 - incorrect email
 
@@ -226,7 +226,7 @@ Actions:
 - enter `test_user@wrong.com` into element `#email`
 - enter `test_user`'s password into element `#password`
 - click element `input[type="submit"]`
-- validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
+- validate that we have been redirected to /login and there is an element `#message` that says "email/password combination incorrect"
 
 ## Test Case R1.P.7.3 - incorrect both email and password
 
@@ -239,7 +239,7 @@ Actions:
 - enter `wrong@wrong.com` into element `#email`
 - enter `Wrrrr0ng!` into element `#password`
 - click element `input[type="submit"]`
-- validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
+- validate that we have been redirected to /login and there is an element `#message` that says "email/password combination incorrect"
 
 ## Test Case R2.P.1 - The registration form can be submitted as a POST request to the current URL
 
@@ -263,7 +263,7 @@ Actions:
 
 - open /register
 - click element `input[type="submit"]`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.2 - Password cannot be empty
 
@@ -272,7 +272,7 @@ Actions:
 - open /register
 - enter `test_user`'s email into the element `#email`
 - click element `input[type="submit"]`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.3 - Email cannot be empty
 
@@ -281,7 +281,7 @@ Actions:
 - open /register
 - enter `test_user`'s password into the element `#password`
 - click element `input[type="submit"]`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.4 - Both are not empty 
 
@@ -303,7 +303,7 @@ Actions:
 - open /register
 - Enter email in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.6 - Local part has illegal characters 
 
@@ -313,7 +313,7 @@ Actions:
 - open /register
 - Enter email in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#error` element that contains the message "email/password format is incorrect
+- validate that there is an `#message` element that contains the message "email/password format is incorrect
 
 
 
@@ -334,7 +334,7 @@ Actions:
 - open /register
 - Enter `12345678901234567890123456789012345678901234567890123456789012341234567890123456789012345678901234567890123456789012345678901234@test.com`in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.9 - "." cannot be consecutive or at the start or end.
 
@@ -344,7 +344,7 @@ Actions:
 - open /register
 - Enter email in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.10 - Password too short
 
@@ -353,7 +353,7 @@ Actions:
 - open /register
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter `a1A!` into element `#password`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.11 - Password missing special  
 
@@ -362,7 +362,7 @@ Actions:
 - open /register
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter aaaAAA111 into element `#password`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.12 - Missing number 
 
@@ -371,7 +371,7 @@ Actions:
 - open /register
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter `aaaAAA!!!!` into element `#password`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 
 
@@ -382,7 +382,7 @@ Actions:
 - open /register
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter AAAA1111!!!! into element `#password`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.14 - missing uppercase 
 
@@ -391,7 +391,7 @@ Actions:
 - open /register
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter `aaa111!!!!` into element `#password`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.15 - Valid passwords work
 
