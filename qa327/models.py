@@ -21,7 +21,7 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
-    balance = db.Column(db.Numeric)
+    balance = db.Column(db.Integer)
 
 class Ticket(db.Model):
     """
@@ -30,7 +30,7 @@ class Ticket(db.Model):
     name = db.Column(db.String(100), primary_key=True)
     owner = db.Column(db.Integer)
     qty = db.Column(db.Integer)
-    price = db.Column(db.Numeric)
+    price = db.Column(db.Integer)
     exp = db.Column(db.DateTime)
 
 # it creates all the SQL tables if they do not exist

@@ -32,7 +32,7 @@ Actions:
 
 - open /login
 - click element `input[type="submit"]`
-- validate that there is an `#error` element that contains the message "email/password format is incorrect"
+- validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.2.2 - Password cannot be empty
 
