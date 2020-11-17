@@ -24,6 +24,12 @@ testuser3 = User(
     password=generate_password_hash('test_frontendA1$')
 )
 
+testuser4 = User(email='test@test.com', name='testuser',
+    password=generate_password_hash("aaaaa1$A")
+)
+testuser5 = User(email='test@test.com', name='testuser',
+    password=generate_password_hash('abct)432A')
+)
 class R1TestPost(BaseCase):
     # Test form post 
     @patch('qa327.backend.get_user', return_value=test_user)
@@ -171,6 +177,146 @@ class R1TestPost(BaseCase):
         self.type("#email", "this'isactuallyv{ok@wtf.lol")
         # enter password but no name  
         self.type("#password", "test_frontendA1$")
+        # try submit form 
+        self.click("input[type='submit']")
+        # should be email format is incorrect 
+        self.open(base_url)
+        # validate that we are logged in (ie we can see the welcome header
+        # and our name)
+        self.assert_element("#welcome-header")
+        self.assert_text("Hi testuser !")
+
+    def test_r1_post_3_4(self, *_):
+        # logout if logged in
+        self.open(base_url + '/logout')
+        # open login page
+        self.open(base_url +'/login')
+        # enter email  
+        self.type("#email", "12345678901234567890123456789012345678901234567890123456789012341234567890123456789012345678901234567890123456789012345678901234@test.com" )
+        # enter password but no name  
+        self.type("#password", "test_frontendA1$")
+        # try submit form 
+        self.click("input[type='submit']")
+        # should be email format is incorrect 
+        self.assert_element("#message")
+        self.assert_text("Email/password format is incorrect.")
+
+    # test invalid email format 
+    def test_r1_post_3_5(self, *_):
+        for i in ["test..test@test.com", "test.test@test..com",".test@test.com", "test.@test.com"]:
+            # logout if logged in
+            self.open(base_url + '/logout')
+            # open login page
+            self.open(base_url +'/login')
+            # enter email  
+            self.type("#email", i)
+            # enter password but no name  
+            self.type("#password", "test_frontendA1$")
+            # try submit form 
+            self.click("input[type='submit']")
+            # should be email format is incorrect 
+            self.assert_element("#message")
+            self.assert_text("Email/password format is incorrect.")
+
+    # password too short 
+    def test_r1_post_4_1(self, *_):
+        # logout if logged in
+        self.open(base_url + '/logout')
+        # open login page
+        self.open(base_url +'/login')
+        # enter email  
+        self.type("#email", "test@test.com")
+        # enter password but no name  
+        self.type("#password", "a1A!")
+        # try submit form 
+        self.click("input[type='submit']")
+        # should be email format is incorrect 
+        self.assert_element("#message")
+        self.assert_text("Email/password format is incorrect.")
+
+    # password missing special character
+    def test_r1_post_4_2(self, *_):
+        # logout if logged in
+        self.open(base_url + '/logout')
+        # open login page
+        self.open(base_url +'/login')
+        # enter email  
+        self.type("#email", "test@test.com")
+        # enter password but no name  
+        self.type("#password", "aaaAAA111")
+        # try submit form 
+        self.click("input[type='submit']")
+        # should be email format is incorrect 
+        self.assert_element("#message")
+        self.assert_text("Email/password format is incorrect.")
+
+
+
+    # password missing lowercase 
+    def test_r1_post_4_3(self, *_):
+        # logout if logged in
+        self.open(base_url + '/logout')
+        # open login page
+        self.open(base_url +'/login')
+        # enter email  
+        self.type("#email", "test@test.com")
+        # enter password but no name  
+        self.type("#password", "AAAA1111!!!!")
+        # try submit form 
+        self.click("input[type='submit']")
+        # should be email format is incorrect 
+        self.assert_element("#message")
+        self.assert_text("Email/password format is incorrect.")
+
+
+    # password missing uppercase  
+    def test_r1_post_4_4(self, *_):
+        # logout if logged in
+        self.open(base_url + '/logout')
+        # open login page
+        self.open(base_url +'/login')
+        # enter email  
+        self.type("#email", "test@test.com")
+        # enter password but no name  
+        self.type("#password", "aaa111!!!!")
+        # try submit form 
+        self.click("input[type='submit']")
+        # should be email format is incorrect 
+        self.assert_element("#message")
+        self.assert_text("Email/password format is incorrect.")
+
+
+    @patch('qa327.backend.get_user', return_value=testuser4)
+    def test_r1_post_4_6_1(self, *_):
+
+        # logout if logged in
+        self.open(base_url + '/logout')
+        # open login page
+        self.open(base_url +'/login')
+        # enter email  
+        self.type("#email", 'test@test.com')
+        # enter password but no name  
+        self.type("#password", "aaaaa1$A")
+        # try submit form 
+        self.click("input[type='submit']")
+        # should be email format is incorrect 
+        self.open(base_url)
+        # validate that we are logged in (ie we can see the welcome header
+        # and our name)
+        self.assert_element("#welcome-header")
+        self.assert_text("Hi testuser !")
+
+    @patch('qa327.backend.get_user', return_value=testuser5)
+    def test_r1_post_4_6_2(self, *_):
+
+        # logout if logged in
+        self.open(base_url + '/logout')
+        # open login page
+        self.open(base_url +'/login')
+        # enter email  
+        self.type("#email", "test@test.com")
+        # enter password but no name  
+        self.type("#password", "abct)432A")
         # try submit form 
         self.click("input[type='submit']")
         # should be email format is incorrect 

@@ -32,7 +32,7 @@ Actions:
 
 - open /login
 - click element `input[type="submit"]`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.2.2 - Password cannot be empty
 
@@ -40,7 +40,7 @@ Actions:
 - open /login
 - enter `test_user`'s email into the element `#email`
 - click element `input[type="submit"]`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.2.3 - Email cannot be empty
 
@@ -48,7 +48,7 @@ Actions:
 - open /login
 - enter `test_user`'s password into the element `#password`
 - click element `input[type="submit"]`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.2.4 - Both are not empty 
 
@@ -69,7 +69,7 @@ Actions:
 - open /login 
 - Enter email in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.3.2 - Local part has illegal characters 
 
@@ -79,7 +79,7 @@ Actions:
 - open /login 
 - Enter email in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#message` element that contains the message "email/password format is incorrect
+- validate that there is an `#error` element that contains the message "email/password format is incorrect
 
 
 
@@ -100,7 +100,7 @@ Actions:
 - open /login 
 - Enter `12345678901234567890123456789012345678901234567890123456789012341234567890123456789012345678901234567890123456789012345678901234@test.com`in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.3.5 - "." cannot be consecutive or at the start or end.
 
@@ -110,7 +110,7 @@ Actions:
 - open /login 
 - Enter email in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.4.1 - Password too short
 
@@ -121,7 +121,7 @@ Actions:
 - open /login
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter `a1A!` into element `#password`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.4.2 - Password missing special 
 
@@ -132,22 +132,11 @@ Actions:
 - open /login
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter aaaAAA111 into element `#password`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
-
-## Test Case R1.P.4.3 - Missing number 
-
-Note: Why is this in the login api endpoint, we really should not care about what they enter, in fact these should not even be chacked clientside and instead should be allowed to pass through to the server, so that it eats up the client's rate limit tokens. Users should be 1000000% sure that the password they are entering in is not only valid, but  is actually indeed their password. 
-
-Actions:
-
-- open /login
-- Enter a valid email in element `#email` (ex. `test@test.com`)
-- Enter `aaaAAA!!!!` into element `#password`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 
 
-## Test Case R1.P.4.4 - Missing lowercase 
+## Test Case R1.P.4.3 - Missing lowercase 
 
 Note: Why is this in the login api endpoint, we really should not care about what they enter, in fact these should not even be chacked clientside and instead should be allowed to pass through to the server, so that it eats up the client's rate limit tokens. Users should be 1000000% sure that the password they are entering in is not only valid, but  is actually indeed their password. 
 
@@ -156,9 +145,9 @@ Actions:
 - open /login
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter AAAA1111!!!! into element `#password`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
-## Test Case R1.P.4.5 - missing uppercase 
+## Test Case R1.P.4.4 - missing uppercase 
 
 Note: Why is this in the login api endpoint, we really should not care about what they enter, in fact these should not even be chacked clientside and instead should be allowed to pass through to the server, so that it eats up the client's rate limit tokens. Users should be 1000000% sure that the password they are entering in is not only valid, but  is actually indeed their password. 
 
@@ -167,9 +156,9 @@ Actions:
 - open /login
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter `aaa111!!!!` into element `#password`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
-## Test Case R1.P.4.6 - Valid passwords work
+## Test Case R1.P.4.5 - Valid passwords work
 
 Actions:
 
@@ -213,7 +202,7 @@ Actions:
 - enter `test_user`'s email into element `#email`
 - enter `Password1$` into element `#password`
 - click element `input[type="submit"]`
-- validate that we have been redirected to /login and there is an element `#message` that says "email/password combination incorrect"
+- validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
 
 ## Test Case R1.P.7.2 - incorrect email
 
@@ -226,7 +215,7 @@ Actions:
 - enter `test_user@wrong.com` into element `#email`
 - enter `test_user`'s password into element `#password`
 - click element `input[type="submit"]`
-- validate that we have been redirected to /login and there is an element `#message` that says "email/password combination incorrect"
+- validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
 
 ## Test Case R1.P.7.3 - incorrect both email and password
 
@@ -239,7 +228,7 @@ Actions:
 - enter `wrong@wrong.com` into element `#email`
 - enter `Wrrrr0ng!` into element `#password`
 - click element `input[type="submit"]`
-- validate that we have been redirected to /login and there is an element `#message` that says "email/password combination incorrect"
+- validate that we have been redirected to /login and there is an element `#error` that says "email/password combination incorrect"
 
 ## Test Case R2.P.1 - The registration form can be submitted as a POST request to the current URL
 
@@ -263,7 +252,7 @@ Actions:
 
 - open /register
 - click element `input[type="submit"]`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.2 - Password cannot be empty
 
@@ -272,7 +261,7 @@ Actions:
 - open /register
 - enter `test_user`'s email into the element `#email`
 - click element `input[type="submit"]`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.3 - Email cannot be empty
 
@@ -281,7 +270,7 @@ Actions:
 - open /register
 - enter `test_user`'s password into the element `#password`
 - click element `input[type="submit"]`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.4 - Both are not empty 
 
@@ -299,11 +288,11 @@ Note: This test should also be done clientside, and honestly it doesn't really e
 
 Actions:
 
-- For the following emails: `["Test.test.com", "test@test@test.com"]`
+- For the following emails: `["Test.test.com", "[test@test@test com](test@test@test.com)"]`
 - open /register
 - Enter email in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.6 - Local part has illegal characters 
 
@@ -313,7 +302,7 @@ Actions:
 - open /register
 - Enter email in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#message` element that contains the message "email/password format is incorrect
+- validate that there is an `#error` element that contains the message "email/password format is incorrect
 
 
 
@@ -334,7 +323,7 @@ Actions:
 - open /register
 - Enter `12345678901234567890123456789012345678901234567890123456789012341234567890123456789012345678901234567890123456789012345678901234@test.com`in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.9 - "." cannot be consecutive or at the start or end.
 
@@ -344,7 +333,7 @@ Actions:
 - open /register
 - Enter email in element `#email`
 - enter a valid password in `#password` (ex. `Password1!`)
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.10 - Password too short
 
@@ -353,7 +342,7 @@ Actions:
 - open /register
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter `a1A!` into element `#password`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.11 - Password missing special  
 
@@ -362,27 +351,18 @@ Actions:
 - open /register
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter aaaAAA111 into element `#password`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
-
-## Test Case R2.P.2.12 - Missing number 
-
-Actions:
-
-- open /register
-- Enter a valid email in element `#email` (ex. `test@test.com`)
-- Enter `aaaAAA!!!!` into element `#password`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 
 
-## Test Case R2.P.2.13 - Missing lowercase 
+## Test Case R2.P.2.12 - Missing lowercase 
 
 Actions:
 
 - open /register
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter AAAA1111!!!! into element `#password`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.14 - missing uppercase 
 
@@ -391,7 +371,7 @@ Actions:
 - open /register
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Enter `aaa111!!!!` into element `#password`
-- validate that there is an `#message` element that contains the message "email/password format is incorrect"
+- validate that there is an `#error` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.15 - Valid passwords work
 
@@ -609,10 +589,9 @@ Action:
 | Email has to follow addr-spec defined in RFC 5322            | R1.P.3.5 | "." cannot be consecutive or at the start or end.            |
 | Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R1.P.4.1 | password shorter than 6 chars                                |
 | Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R1.P.4.2 | missing special character                                    |
-| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R1.P.4.3 | missing number                                               |
-| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R1.P.4.4 | missing lowercase letter                                     |
-| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R1.P.4.5 | missing uppercase letter                                     |
-| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R1.P.4.6 | valid passwords still work                                   |
+| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R1.P.4.3 | missing lowercase letter                                     |
+| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R1.P.4.4 | missing uppercase letter                                     |
+| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R1.P.4.5 | valid passwords still work                                   |
 | For any formatting errors, render the login page and show the message 'email/password format is incorrect' | R1.P.5   | Actually covered by R1.P.2, R1.P.3, R1.P.4.                  |
 | If the email/password are correct, redirect to /             | R1.P.6   | If the email/password are correct, redirect to /             |
 | Otherwise, redirect to /login and show message 'email/password combination incorrect' | R1.P.7.1 | Test incorrect password.                                     |
@@ -631,10 +610,9 @@ Action:
 | Email has to follow addr-spec defined in RFC 5322            | R2.P.2.9 | "." cannot be consecutive or at the start or end.            |
 | Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R2.P.2.10 | password shorter than 6 chars                                |
 | Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R2.P.2.11 | missing special character                                    |
-| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R2.P.2.12 | missing number                                               |
-| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R2.P.2.13 | missing lowercase letter                                     |
-| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R2.P.2.14 | missing uppercase letter                                     |
-| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R2.P.2.15 | valid passwords still work                                   |
+| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R2.P.2.12 | missing lowercase letter                                     |
+| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R2.P.2.13 | missing uppercase letter                                     |
+| Password has to meet the required complexity: min length 6, at least 1 upper case, at least 1 lower case, at least 1 special char | R2.P.2.14 | valid passwords still work                                   |
 | Password and password2 have to be exactly the same           | R2.P.3.1 | Password and password2 are different                         |
 | Password and password2 have to be exactly the same           | R2.P.3.2 | Password and password2 are the same                          |
 | User name has to be non-empty, alphanumeric-only, and space allowed only if it is not the first or the last character. | R2.P.4.1 | Username not alphanumeric                                    |
