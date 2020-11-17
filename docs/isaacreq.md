@@ -251,6 +251,7 @@ Note: these checks should be done clientside first, to prevent the client from s
 Actions:
 
 - open /register
+- enter `test_user`'s name into element `#name`
 - click element `input[type="submit"]`
 - validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
@@ -260,6 +261,7 @@ Actions:
 
 - open /register
 - enter `test_user`'s email into the element `#email`
+- enter `test_user`'s name into element `#name`
 - click element `input[type="submit"]`
 - validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
@@ -268,6 +270,7 @@ Actions:
 Actions: 
 
 - open /register
+- enter `test_user`'s name into element `#name`
 - enter `test_user`'s password into the element `#password`
 - click element `input[type="submit"]`
 - validate that there is an `#message` element that contains the message "email/password format is incorrect"
@@ -279,6 +282,7 @@ Actions:
 - open /register
 - enter `test_user`'s email into the element `#email`
 - enter `test_user`'s password into the element `#password`
+- enter `test_user`'s name into element `#name`
 - click element `input[type="submit"]`
 - validate that there is no error and you are redirected to /
 
@@ -291,6 +295,7 @@ Actions:
 - For the following emails: `["Test.test.com", "[test@test@test com](test@test@test.com)"]`
 - open /register
 - Enter email in element `#email`
+- enter `test_user`'s name into element `#name`
 - enter a valid password in `#password` (ex. `Password1!`)
 - validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
@@ -301,6 +306,7 @@ Actions:
 - For the following emails: `[test\"(test,:;<>[\\]@test.com", "test\"test test@test.com", "tggg,,,@test.com"]` 
 - open /register
 - Enter email in element `#email`
+- enter `test_user`'s name into element `#name`
 - enter a valid password in `#password` (ex. `Password1!`)
 - validate that there is an `#message` element that contains the message "email/password format is incorrect
 
@@ -313,6 +319,7 @@ Actions:
 - For the following emails: `["test@test.com", "tst123@testmail.org", "this'isactuallyv{ok@wtf.lol"]` 
 - open /register 
 - Enter email in element `#email`
+- enter `test_user`'s name into element `#name`
 - enter a valid password in `#password` (ex. `Password1!`)
 - validate that there is no error and that we are redirected to /
 
@@ -322,6 +329,7 @@ Actions:
 
 - open /register
 - Enter `12345678901234567890123456789012345678901234567890123456789012341234567890123456789012345678901234567890123456789012345678901234@test.com`in element `#email`
+- enter `test_user`'s name into element `#name`
 - enter a valid password in `#password` (ex. `Password1!`)
 - validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
@@ -332,6 +340,7 @@ Actions:
 - For the following emails: `["test..test@test.com", "test.test@test..com",".test@test.com", "test.@test.com"]` 
 - open /register
 - Enter email in element `#email`
+- enter `test_user`'s name into element `#name`
 - enter a valid password in `#password` (ex. `Password1!`)
 - validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
@@ -341,6 +350,7 @@ Actions:
 
 - open /register
 - Enter a valid email in element `#email` (ex. `test@test.com`)
+- enter `test_user`'s name into element `#name`
 - Enter `a1A!` into element `#password`
 - validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
@@ -350,6 +360,7 @@ Actions:
 
 - open /register
 - Enter a valid email in element `#email` (ex. `test@test.com`)
+- enter `test_user`'s name into element `#name`
 - Enter aaaAAA111 into element `#password`
 - validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
@@ -361,6 +372,7 @@ Actions:
 
 - open /register
 - Enter a valid email in element `#email` (ex. `test@test.com`)
+- enter `test_user`'s name into element `#name`
 - Enter AAAA1111!!!! into element `#password`
 - validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
@@ -370,6 +382,7 @@ Actions:
 
 - open /register
 - Enter a valid email in element `#email` (ex. `test@test.com`)
+- enter `test_user`'s name into element `#name`
 - Enter `aaa111!!!!` into element `#password`
 - validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
@@ -378,11 +391,9 @@ Actions:
 Actions:
 
 - For the following passwords: `["aaaaa1$A, "abct)432A"]`
-
 - open /login
-
+- enter `test_user`'s name into element `#name`
 - Enter a valid email in element `#email` (ex. `test@test.com`)
-
 - Validate that there is no error and we are redirected to /
 
   
