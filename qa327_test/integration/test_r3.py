@@ -16,9 +16,9 @@ test_user = User(
 test_ticket = Ticket(
     owner='test_frontend@test.com',
     name='test_ticket_yo',
-    quantity=10,
+    qty=10,
     price=10,
-    date='20210901'
+    exp='20210901'
 )
 
 class R3Test(BaseCase):
