@@ -71,7 +71,7 @@ def login_user(email, password):
     # Validate email and password, then return string explaining errors present
     if not validate_email(email) or not validate_password(password):
         return "Email/password format is incorrect."
-    elif not user or not check_password_hash(user.password, password):
+    elif not user or not user.email == email or  not check_password_hash(user.password, password):
         return None
     return user
 

@@ -286,6 +286,7 @@ class R1TestPost(BaseCase):
         self.assert_text("Email/password format is incorrect.")
 
 
+    # test that valid passwords work
     @patch('qa327.backend.get_user', return_value=testuser4)
     def test_r1_post_4_6_1(self, *_):
 
@@ -306,6 +307,7 @@ class R1TestPost(BaseCase):
         self.assert_element("#welcome-header")
         self.assert_text("Hi testuser !")
 
+    # test that valid passwords work
     @patch('qa327.backend.get_user', return_value=testuser5)
     def test_r1_post_4_6_2(self, *_):
 
@@ -326,3 +328,67 @@ class R1TestPost(BaseCase):
         self.assert_element("#welcome-header")
         self.assert_text("Hi testuser !")
 
+    # test that redirected to / with valid email pw
+    @patch('qa327.backend.get_user', return_value=test_user)
+    def test_r1_post_6(self, *_):
+        # logout if logged in
+        self.open(base_url + '/logout')
+        # open login page
+        self.open(base_url +'/login')
+        # enter user name and password
+        self.type("#email", "test_frontend@test.com")
+        self.type("#password", "test_frontendA1$")
+        # try submit form 
+        self.click("input[type='submit']")
+        self.assertEqual(self.get_current_url(), base_url+'/')
+
+    # incorrect passwoord
+    @patch('qa327.backend.get_user', return_value=test_user)
+    def test_r1_post_7_1(self, *_):
+        # logout if logged in
+        self.open(base_url + '/logout')
+        # open login page
+        self.open(base_url +'/login')
+        # enter email  
+        self.type("#email", "test_frontend@test.com")
+        # enter password but no name  
+        self.type("#password", "Password1$")
+        # try submit form 
+        self.click("input[type='submit']")
+        # should be email format is incorrect 
+        self.assert_element("#message")
+        self.assert_text("Email/password combination incorrect")
+
+    # incorrect email
+    @patch('qa327.backend.get_user', return_value=test_user)
+    def test_r1_post_7_2(self, *_):
+        # logout if logged in
+        self.open(base_url + '/logout')
+        # open login page
+        self.open(base_url +'/login')
+        # enter email  
+        self.type("#email", "test_user@wrong.com")
+        # enter password but no name  
+        self.type("#password", "test_frontendA1$")
+        # try submit form 
+        self.click("input[type='submit']")
+        # should be email format is incorrect 
+        self.assert_element("#message")
+        self.assert_text("Email/password combination incorrect")
+
+    # incorrect email and password
+    @patch('qa327.backend.get_user', return_value=test_user)
+    def test_r1_post_7_3(self, *_):
+        # logout if logged in
+        self.open(base_url + '/logout')
+        # open login page
+        self.open(base_url +'/login')
+        # enter email  
+        self.type("#email", "wrong@wrong.com")
+        # enter password but no name  
+        self.type("#password", "Wrrrr0ng!")
+        # try submit form 
+        self.click("input[type='submit']")
+        # should be email format is incorrect 
+        self.assert_element("#message")
+        self.assert_text("Email/password combination incorrect")
