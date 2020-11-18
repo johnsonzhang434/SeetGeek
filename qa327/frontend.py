@@ -1,7 +1,8 @@
 from flask import render_template, request, session, redirect, url_for
 from qa327 import app
+from qa327.models import db, Ticket
 import qa327.backend as bn
-
+import datetime
 """
 This file defines the front-end part of the service.
 It elaborates how the services should handle different
@@ -137,5 +138,10 @@ def profile(user):
 	# by using @authenticate, we don't need to re-write
 	# the login checking code all the time for other
 	# front-end portals
-	tickets = bn.get_all_tickets()
+	#tickets = bn.get_all_tickets()
+	#Mock ticket date
+	date = datetime.datetime(2021,9,1)
+	#Mock tickets
+	tickets = [Ticket(name="test_ticket_yo",owner="test_frontend@test.com", qty=10, price=10, exp=date)] 
+	
 	return render_template('index.html', user=user, tickets=tickets)
