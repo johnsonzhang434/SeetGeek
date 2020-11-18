@@ -4,7 +4,7 @@ from qa327_test.conftest import base_url
 from unittest.mock import patch
 from qa327.models import db, User, Ticket
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
+from datetime import datetime 
 
 # Mock a sample user
 test_user = User(
@@ -14,17 +14,18 @@ test_user = User(
     balance=5000
 )
 
-# Mock a sample ticket
+# Mock a sample ticket with sample date
 test_ticket = Ticket(
-    owner='test_frontend@test.com',
-    name='test_ticket_yo',
-    qty=10,
-    price=10,
-    exp='20210901'
+    name="test_ticket_yo",
+    owner="test_frontend@test.com", 
+    qty=10, 
+    price=10, 
+    exp=datetime(2021,9,1)
 )
 
+
 class R3Test(BaseCase):
- 
+    
     # If the user is not logged in, redirect to login page
     def test_r3_1(self, *_):
         # logout if logged in
@@ -85,8 +86,9 @@ class R3Test(BaseCase):
         self.is_link_text_present("logout")
         # validate that when the logout link is clicked, you are redirected to /logout
         self.click_link_text("logout")
-
+   
     @patch('qa327.backend.get_user', return_value=test_user)
+    @patch('qa327.backend.get_all_tickets', return_value=[test_ticket])
     # This page lists all available tickets. Information including the quantity of each ticket, 
     # the owner's email, and the price, for tickets that are not expired.
     def test_r3_5(self,*_):
@@ -114,8 +116,9 @@ class R3Test(BaseCase):
         exp = (self.get_element("#display_exp").text).split()
         exp_date = datetime.strptime(exp[1], '%Y-%m-%d')
         self.assert_true(exp_date>today)
-
+    
     @patch('qa327.backend.get_user', return_value=test_user)
+    @patch('qa327.backend.get_all_tickets', return_value=[test_ticket])
     # This page contains a form that a user can submit new tickets for sell. 
     # Fields: name, quantity, price, expiration date
     def test_r3_6(self,*_):
@@ -148,6 +151,7 @@ class R3Test(BaseCase):
         self.refresh_page()
 
     @patch('qa327.backend.get_user', return_value=test_user)
+    @patch('qa327.backend.get_all_tickets', return_value=[test_ticket])
     # This page contains a form that a user can buy new tickets. Fields: name, quantity
     def test_r3_7(self,*_):
         # logout if logged in
@@ -176,6 +180,7 @@ class R3Test(BaseCase):
         self.refresh_page()
     
     @patch('qa327.backend.get_user', return_value=test_user)
+    @patch('qa327.backend.get_all_tickets', return_value=[test_ticket])
     # The ticket-selling form can be posted to /sell
     def test_r3_8(self,*_):
         # logout if logged in
@@ -207,6 +212,7 @@ class R3Test(BaseCase):
         self.refresh_page()
 
     @patch('qa327.backend.get_user', return_value=test_user)
+    @patch('qa327.backend.get_all_tickets', return_value=[test_ticket])
     #The ticket-buying form can be posted to /buy
     def test_r3_9(self,*_):
         # logout if logged in
@@ -235,6 +241,7 @@ class R3Test(BaseCase):
         self.refresh_page()
 
     @patch('qa327.backend.get_user', return_value=test_user)
+    @patch('qa327.backend.get_all_tickets', return_value=[test_ticket])
     # The ticket-update form can be posted to /update
     def test_r3_10(self,*_):
         # logout if logged in
@@ -258,3 +265,4 @@ class R3Test(BaseCase):
         self.click('input[value="Update"]')
         #Refresh the page
         self.refresh_page()
+    
