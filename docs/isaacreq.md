@@ -51,13 +51,7 @@ Actions:
 - validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R1.P.2.4 - Both are not empty 
-
-Actions: 
-- open /login
-- enter `test_user`'s email into the element `#email`
-- enter `test_user`'s password into the element `#password`
-- click element `input[type="submit"]`
-- validate that there is no error and you are redirected to /
+Removed: redundant to test case R1.P.2.1
 
 ## Test Case R1.P.3.1 - Email has format local@domain.ext
 
@@ -276,15 +270,8 @@ Actions:
 - validate that there is an `#message` element that contains the message "email/password format is incorrect"
 
 ## Test Case R2.P.2.4 - Both are not empty 
+Removed: redundant to R2.P.2.1
 
-Actions: 
-
-- open /register
-- enter `test_user`'s email into the element `#email`
-- enter `test_user`'s password into the element `#password`
-- enter `test_user`'s name into element `#name`
-- click element `input[type="submit"]`
-- validate that there is no error and you are redirected to /
 
 ## Test Case R2.P.2.5 - Email has format local@domain.ext
 
@@ -375,6 +362,9 @@ Actions:
 - enter `test_user`'s name into element `#name`
 - Enter AAAA1111!!!! into element `#password`
 - validate that there is an `#message` element that contains the message "email/password format is incorrect"
+
+## Test Case R2.P.2.13 - Missing numbers
+Removed: not in sepc
 
 ## Test Case R2.P.2.14 - missing uppercase 
 
@@ -507,14 +497,6 @@ Actions:
 - enter `test_user`'s password into element `#password2`
 - click element `input[type="submit"]`
 - validate that there has been a redirect to /login and an error message `name format is incorrect`
-- For the following usernames: `["uuu", "2345678901234567890"]`
-- open /register
-- enter the username into element `#name`
-- enter `test_user`'s email into element `#email`
-- enter `test_user`'s password into element `#password`
-- enter `test_user`'s password into element `#password2`
-- click element `input[type="submit"]`
-- validate that there has been a redirect to /login and no error
 
 ## Test case R2.P.5.3 - valid names work
 

@@ -40,10 +40,10 @@ def validate_username(name):
     :return: boolean, valid or not
     """
     # not empty 
-    if len(name) <= 0:
+    if len(name) <= 2 or len(name) >= 20:
         return False
     # alpha numerico only
-    if not name.isalnum():
+    if any(not (x.isalnum() or x.isspace()) for x in name):
         return False
     # space not firs or last 
     if name[0] == " " or name[-1] == " ":

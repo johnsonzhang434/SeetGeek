@@ -138,4 +138,4 @@ def profile(user):
 	# the login checking code all the time for other
 	# front-end portals
 	tickets = bn.get_all_tickets()
-	return render_template('index.html', user=user, tickets=tickets)
+	return render_template('index.html', user=user, tickets=tickets, balance=user.balance)

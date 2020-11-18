@@ -40,7 +40,7 @@ def server():
     # with a temporary file as database
     server = ServerThread()
     server.start()
-    time.sleep(5)
+    time.sleep(1)
     yield
     server.shutdown()
-    time.sleep(2)
+    time.sleep(1)
