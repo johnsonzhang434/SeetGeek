@@ -381,7 +381,7 @@ Actions:
 Actions:
 
 - For the following passwords: `["aaaaa1$A, "abct)432A"]`
-- open /login
+- open /register
 - enter `test_user`'s name into element `#name`
 - Enter a valid email in element `#email` (ex. `test@test.com`)
 - Validate that there is no error and we are redirected to /
