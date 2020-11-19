@@ -30,7 +30,7 @@ class R1Test(BaseCase):
         # open login page
         self.open(base_url +'/login')
         # validate that there is a message element that says "please login"
-        self.assert_text('Please login', '#message')
+        self.assert_text('Please Login', '#message')
 
     # If the user has logged in, redirect to the user profile page
     @patch('qa327.backend.get_user', return_value=test_user)

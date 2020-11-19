@@ -48,7 +48,7 @@ def login_get():
 		return render_template('login.html', message=msg)
 	if 'logged_in' in session:
 		return redirect('/')
-	return render_template('login.html', message='Please login')
+	return render_template('login.html', message='Please Login')
 
 
 @app.route('/login', methods=['POST'])
