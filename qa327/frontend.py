@@ -49,7 +49,7 @@ def login_get():
 		return render_template('login.html', message=msg)
 	if 'logged_in' in session:
 		return redirect('/')
-	return render_template('login.html', message='Please login')
+	return render_template('login.html', message='Please Login')
 
 
 @app.route('/login', methods=['POST'])
@@ -139,5 +139,4 @@ def profile(user):
 	# the login checking code all the time for other
 	# front-end portals
 	tickets = bn.get_all_tickets()
-	
-	return render_template('index.html', user=user, tickets=tickets)
+  return render_template('index.html', user=user, tickets=tickets, balance=user.balance)

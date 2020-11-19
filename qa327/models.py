@@ -30,10 +30,12 @@ class Ticket(db.Model):
     name = db.Column(db.String(100), primary_key=True)
     owner = db.Column(db.Integer)
     qty = db.Column(db.Integer)
-    price = db.Column(db.Numeric)
+    price = db.Column(db.Integer)
     exp = db.Column(db.DateTime)
 
 # it creates all the SQL tables if they do not exist
 with app.app_context():
     db.create_all()
     db.session.commit()
+
+
