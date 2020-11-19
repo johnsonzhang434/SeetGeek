@@ -1,7 +1,8 @@
 from flask import render_template, request, session, redirect, url_for
 from qa327 import app
+from qa327.models import db, Ticket
 import qa327.backend as bn
-
+import datetime
 """
 This file defines the front-end part of the service.
 It elaborates how the services should handle different
