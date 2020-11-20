@@ -64,7 +64,7 @@ def login_post():
 	if isinstance(user, str):
 		return render_template('login.html', message=user) # return error message
 
-    # email and password are non-empty
+	# email and password are non-empty
 	if user:
 		session['logged_in'] = user.email
 		"""
@@ -141,7 +141,7 @@ def profile(user):
 	# the login checking code all the time for other
 	# front-end portals
 	tickets = bn.get_all_tickets()
-  return render_template('index.html', user=user, tickets=tickets, balance=user.balance)
+	return render_template('index.html', user=user, tickets=tickets, balance=user.balance)
 
 
 @app.route('/update', methods = ['POST'])
@@ -156,11 +156,12 @@ def update_post(user):
 	date = request.form.get('update_date')
 	error_list = []
 	error_list = bn.update_ticket(orig_name, update_name, qty, price, date)
+	tickets = bn.get_all_tickets()
 
 	if len(error_list) >0:
-		return render_template('index.html', user = user, tickets=tickets, balance=user.balance message = error_list[0])
+		return render_template('index.html', user = user, tickets=tickets, balance=user.balance, message = error_list[0])
 	else:
-		return render_template('index.html', user = user, tickets=tickets, balance=user.balance message = 'Ticket Updated')
+		return render_template('index.html', user = user, tickets=tickets, balance=user.balance, message = 'Ticket Updated')
 
 
 @app.route('/buy', methods=['POST'])
@@ -171,8 +172,9 @@ def buy_post(user):
 	qty = request.form.get('buy_qty')
 	error_list = []
 	error_list = bn.buy_ticket(buy_name, qty, user)
+	tickets = bn.get_all_tickets()
 
 	if len(error_list) >0:
-		return render_template('index.html', user = user, tickets=tickets, balance=user.balance message = error_list[0])
+		return render_template('index.html', user = user, tickets=tickets, balance=user.balance, message = error_list[0])
 	else:
-		return render_template('index.html', user = user, tickets=tickets, balance=user.balance message = 'Ticket Purchased')
+		return render_template('index.html', user = user, tickets=tickets, balance=user.balance, message = 'Ticket Purchased')
