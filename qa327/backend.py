@@ -39,11 +39,11 @@ def validate_username(name):
     :param name: name to be validated
     :return: boolean, valid or not
     """
-    # not empty
-    if len(name) <= 0:
+    # not empty 
+    if len(name) <= 2 or len(name) >= 20:
         return False
     # alpha numerico only
-    if not name.isalnum():
+    if any(not (x.isalnum() or x.isspace()) for x in name):
         return False
     # space not firs or last
     if name[0] == " " or name[-1] == " ":
@@ -71,7 +71,7 @@ def login_user(email, password):
     # Validate email and password, then return string explaining errors present
     if not validate_email(email) or not validate_password(password):
         return "Email/password format is incorrect."
-    elif not user or not check_password_hash(user.password, password):
+    elif not user or not user.email == email or  not check_password_hash(user.password, password):
         return None
     return user
 

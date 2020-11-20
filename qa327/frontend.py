@@ -2,8 +2,9 @@ from flask import render_template, request, session, redirect, url_for
 from functools import wraps
 
 from qa327 import app
+from qa327.models import db, Ticket
 import qa327.backend as bn
-
+import datetime
 """
 This file defines the front-end part of the service.
 It elaborates how the services should handle different
@@ -50,7 +51,7 @@ def login_get():
 		return render_template('login.html', message=msg)
 	if 'logged_in' in session:
 		return redirect('/')
-	return render_template('login.html', message='Please login')
+	return render_template('login.html', message='Please Login')
 
 
 @app.route('/login', methods=['POST'])
@@ -140,7 +141,7 @@ def profile(user):
 	# the login checking code all the time for other
 	# front-end portals
 	tickets = bn.get_all_tickets()
-	return render_template('index.html', user=user, tickets=tickets)
+  return render_template('index.html', user=user, tickets=tickets, balance=user.balance)
 
 
 @app.route('/update', methods = ['POST'])
@@ -157,9 +158,9 @@ def update_post(user):
 	error_list = bn.update_ticket(orig_name, update_name, qty, price, date)
 
 	if len(error_list) >0:
-		return render_template('index.html', user = user, message = error_list[0])
+		return render_template('index.html', user = user, tickets=tickets, balance=user.balance message = error_list[0])
 	else:
-		return render_template('index.html', user = user, message = 'Ticket Updated')
+		return render_template('index.html', user = user, tickets=tickets, balance=user.balance message = 'Ticket Updated')
 
 
 @app.route('/buy', methods=['POST'])
@@ -172,6 +173,6 @@ def buy_post(user):
 	error_list = bn.buy_ticket(buy_name, qty, user)
 
 	if len(error_list) >0:
-		return render_template('index.html', user = user, message = error_list[0])
+		return render_template('index.html', user = user, tickets=tickets, balance=user.balance message = error_list[0])
 	else:
-		return render_template('index.html', user = user, message = 'Ticket Purchased')
+		return render_template('index.html', user = user, tickets=tickets, balance=user.balance message = 'Ticket Purchased')

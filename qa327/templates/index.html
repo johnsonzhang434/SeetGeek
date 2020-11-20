@@ -6,14 +6,18 @@
 
 {% block content %}
 <h2 id="welcome-header">Hi {{ user.name }} !</h2>
-<h3 id="balance"> Your Current Balance is {{ balance }}</h3>
+<h3 id="balance"> Your Current Balance is {{user.balance}}</h3>
 
 <h2 >Here are all available tickets</h2>
 
 <div id="tickets">
 {% for ticket in tickets %}
     <div>
-        <h4>{{ ticket.name }} {{ ticket.price }}</h4>
+		<h4 id = "display_name">Name: {{ticket.name}}</h4>
+		<h4 id = "display_owner">Owner: {{ticket.owner}}</h4>
+		<h4 id = "display_price">Price: {{ticket.price}}</h4>
+		<h4 id = "display_qty">Quantity: {{ticket.qty}}</h4>
+		<h4 id = "display_exp">Date: {{ticket.exp}}</h4>
     </div>
 {% endfor %}
 </div>
@@ -24,7 +28,7 @@
 <h2> Sell Ticket</h2>
 <form action = '/sell' method="post">
 	<label for="sell_name"> Ticket Name: </label>
-	<input type="text" id "sell_name" name="sell_name">
+	<input type="text" id="sell_name" name="sell_name">
 	<br>
 	<label for="sell_qty"> Quantity:</label>
 	<input type="number" id="sell_qty" name="sell_qty">

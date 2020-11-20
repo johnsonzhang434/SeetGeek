@@ -6,6 +6,7 @@ import time
 import tempfile
 from qa327.__main__ import FLASK_PORT
 from qa327.__main__ import app
+from qa327.models import db
 import threading
 from werkzeug.serving import make_server
 
@@ -22,6 +23,10 @@ class ServerThread(threading.Thread):
 
     def run(self):
         self.srv.serve_forever()
+        with self.ctx:
+            db.drop_all()
+            db.create_all()
+            db.session.commit()
 
     def shutdown(self):
         self.srv.shutdown()
@@ -29,14 +34,13 @@ class ServerThread(threading.Thread):
 
 @pytest.fixture(scope="module", autouse=True)
 def server():
+
     on_win = os.name == 'nt'
-    with tempfile.TemporaryDirectory() as tmp_folder:
-        # create a live server for testing
-        # with a temporary file as database
-        db = os.path.join(tmp_folder, 'db.sqlite')
-        server = ServerThread()
-        server.start()
-        time.sleep(5)
-        yield
-        server.shutdown()
-        time.sleep(2)
+    # create a live server for testing
+    # with a temporary file as database
+    server = ServerThread()
+    server.start()
+    time.sleep(1)
+    yield
+    server.shutdown()
+    time.sleep(1)
