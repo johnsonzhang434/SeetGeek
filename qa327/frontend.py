@@ -178,3 +178,20 @@ def buy_post(user):
 		return render_template('index.html', user = user, tickets=tickets, balance=user.balance, message = error_list[0])
 	else:
 		return render_template('index.html', user = user, tickets=tickets, balance=user.balance, message = 'Ticket Purchased')
+
+@app.route('/sell', methods = ['POST'])
+@authenticate
+def sell_post(user):
+	
+	sell_name = request.form.get('sell_name')
+	qty = request.form.get('sell_qty')
+	price = request.form.get('sell_price')
+	date = request.form.get('sell_date')
+	error_list = []
+	error_list = bn.sell_ticket(sell_name, qty, price, date)
+	tickets = bn.get_all_tickets()
+
+	if len(error_list) >0:
+		return render_template('index.html', user = user, tickets=tickets, balance=user.balance, message = error_list[0])
+	else:
+		return render_template('index.html', user = user, tickets=tickets, balance=user.balance, message = 'Ticket Posted for Sale')
