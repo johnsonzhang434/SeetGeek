@@ -226,9 +226,10 @@ def update_ticket(orig_name, new_name, qty, price, date):
 def calculate_price(p, q):
 	price = int(p)
 	qty = int(q)
-	service_fee = 5
-	tax = 1.13
-	return int(price * qty * tax + service_fee)
+	service_fee = 0.35
+	tax = 0.05
+	temp_price = price*qty
+	return int(temp_price * tax + temp_price * service_fee + temp_price)
 
 def validate_buy_price(ticket_price, balance, qty):
 	if calculate_price(ticket_price, qty) < balance:
@@ -239,7 +240,6 @@ def validate_buy_qty(qty, buy_qty):
 	if int(qty) <= buy_qty:
 		return []
 	return ["Invalid purchase quantity"]
-
 
 def buy_ticket(name, qty, user):
 	errors = []
@@ -257,4 +257,19 @@ def buy_ticket(name, qty, user):
 	if len(errors) > 0:
 		return errors
 
+	return []
+
+# The added new ticket information will be posted on the user profile page
+# if no error
+def sell_ticket(name, qty, price, date):
+	errors = []
+	
+	errors += (validate_ticket_name(name))
+	errors += (validate_ticket_qty(qty))
+	errors +=(validate_ticket_price(price))
+	if not validate_ticket_date(date):
+		errors.append("invalid date format")
+
+	if len(errors) > 0:
+		return errors
 	return []
