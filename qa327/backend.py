@@ -221,7 +221,7 @@ def update_ticket(orig_name, new_name, qty, price, date):
 	#update db with new ticket info
 	if get_ticket(orig_name) != None:
 		db.session.delete(get_ticket(orig_name))
-		db.session.add(Ticket(new_name, qty, price, date))
+		db.session.add(Ticket(name=new_name, qty=qty, price=price, date=date))
 		db.session.commit()
 	return []
 
