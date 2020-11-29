@@ -117,7 +117,7 @@ def register_user(email, name, password, password2):
 
 
 def get_all_tickets():
-	return []
+    return Ticket.query.all()
 
 def validate_ticket_name(name):
 	"""
@@ -203,25 +203,27 @@ def get_ticket(ticket):
 
 
 def update_ticket(orig_name, new_name, qty, price, date):
-	"""
+    """
 	heck
 	"""
-	errors = []
-	if get_ticket(orig_name) is None:
+    errors = []
+    if get_ticket(orig_name) is None:
 		errors.append("Ticket not found, ticket not updated")
-	errors += (validate_ticket_name(new_name))
-	errors += (validate_ticket_qty(qty))
-	errors +=(validate_ticket_price(price))
-	if not validate_ticket_date(date):
-		errors.append("invalid date format")
+    errors += (validate_ticket_name(new_name))
+    errors += (validate_ticket_qty(qty))
+    errors +=(validate_ticket_price(price))
+    if not validate_ticket_date(date):
+	    errors.append("invalid date format")
 
-	if len(errors) > 0:
-		return errors
+    if len(errors) > 0:
+        return errors
 
-	#update db here
-	#check_ticket_in_db(orig_name) = Ticket(new_name, qty, price, date)
-	return []
-
+    #update db with new ticket info
+    if get_ticket(orig_name) != None:
+        db.session.delete(get_ticket(orig_name))
+        db.session.add(Ticket(new_name, qty, price, date))
+        db.session.commit()
+    return []
 
 def calculate_price(p, q):
 	price = int(p)
