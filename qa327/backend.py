@@ -1,6 +1,7 @@
 from qa327.models import db, User, Ticket
 from werkzeug.security import generate_password_hash, check_password_hash
 from email_validator import validate_email as val_e, EmailNotValidError
+from datetime import datetime 
 
 """
 This file defines all backend logic that interacts with database and other services
@@ -178,7 +179,8 @@ def validate_ticket_date(date):
 	"""
 	year = date[0:4]
 	month = date[4:6]
-	day = date[6:-1]
+	#Changed day to accept end of string in format: "00"
+	day = date[6:8]
 	if len(date) != 8:
 		return False
 	if not date.isnumeric():
@@ -264,6 +266,12 @@ def buy_ticket(name, qty, user):
 	if len(errors) > 0:
 		return errors
 
+	#Buy ticket using database
+	ticket = get_ticket(name)
+	if ticket is not None:
+		ticket.qty -= int(qty)
+		user.balance -= calculate_price(ticket.price, qty)
+		db.session.commit()
 	return []
 
 # The added new ticket information will be posted on the user profile page
@@ -279,4 +287,15 @@ def sell_ticket(name, qty, price, date):
 
 	if len(errors) > 0:
 		return errors
+
+	#Sell Ticket using database	
+	year = date[0:4]
+	month = date[4:6]
+	#Changed day to accept end of string in format: "00"
+	day = date[6:8]
+	converteddate = datetime(int(year),int(month),int(day))
+	#update db with new ticket info
+	ticket = Ticket(name = name, qty = qty, price = price, exp = converteddate)
+	db.session.add(ticket)
+	db.session.commit()
 	return []
