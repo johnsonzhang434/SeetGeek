@@ -270,6 +270,7 @@ def buy_ticket(name, qty, user):
 	ticket = get_ticket(name)
 	if ticket is not None:
 		ticket.qty -= int(qty)
+		user.balance -= calculate_price(ticket.price, qty)
 		db.session.commit()
 	return []
 
