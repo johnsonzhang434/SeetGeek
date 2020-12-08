@@ -19,7 +19,7 @@ test_ticket = Ticket(
 	price = 15,
 	exp = '20201119')
 
-class R5Test(BaseCase):
+class R4Test1(BaseCase):
 	@patch('qa327.backend.get_user', return_value=test_user)
 	def test_r4_5_2_1(self, *_):
 		#logout if logged in
