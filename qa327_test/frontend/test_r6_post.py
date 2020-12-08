@@ -16,8 +16,8 @@ test_user2 = User(
 	email = 'test_frontend@test.com',
 	name = 'test_user',
 	password = generate_password_hash('test_frontendA1$'),
-	balance = 500)
-
+	balance = 5000)
+ 
 test_ticket = Ticket(
 	name = 'test ticket',
 	owner = 1,
@@ -32,6 +32,19 @@ test_ticket2 = Ticket(
 	price = 15,
 	exp = '20201119')
 
+test_ticket3 = Ticket(
+	name = 'test ticket 3',
+	owner = 1,
+	qty = 100,
+	price = 10,
+	exp = '20201207')
+
+test_ticket4 = Ticket(
+	name = 'test ticket 4',
+	owner = 1,
+	qty = 10,
+	price = 15,
+	exp = '20201119')
 
 
 class R6Test(BaseCase):
@@ -311,7 +324,7 @@ class R6Test(BaseCase):
 		self.assert_text("Ticket Purchased")
 
 	@patch('qa327.backend.get_user', return_value=test_user2)
-	@patch('qa327.backend.get_ticket', return_value=test_ticket)
+	@patch('qa327.backend.get_ticket', return_value=test_ticket3)
 	def test_r6_3e(self, *_):
 		#logout if logged in
 		self.open(base_url + '/logout')
@@ -352,7 +365,7 @@ class R6Test(BaseCase):
 		self.assert_element("#message")
 		self.assert_text("Invalid purchase quantity")
 
-	@patch('qa327.backend.get_user', return_value=test_user)
+	@patch('qa327.backend.get_user', return_value=test_user2)
 	@patch('qa327.backend.get_ticket', return_value=test_ticket2)
 	def test_r6_4b(self, *_):
 		#logout if logged in
@@ -415,7 +428,7 @@ class R6Test(BaseCase):
 		self.assert_text("Ticket Purchased")
 
 	@patch('qa327.backend.get_user', return_value=test_user)
-	@patch('qa327.backend.get_ticket', return_value=test_ticket2)
+	@patch('qa327.backend.get_ticket', return_value=test_ticket4)
 	def test_r6_5b(self, *_):
 		#logout if logged in
 		self.open(base_url + '/logout')
