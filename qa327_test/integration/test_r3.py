@@ -106,15 +106,15 @@ class R3Test(BaseCase):
         # validate that all available tickets are not expired.
         self.assert_text("Here are all available tickets")
         # validate that valid tickets have a #name, #quantity, #owner's email, and #price element.
-        self.assert_text("Name: test_ticket_yo", "#display_name")
-        self.assert_text("Owner: test_frontend@test.com", "#display_owner")
+        self.assert_text("test_ticket_yo", "#display_name")
+        self.assert_text("test_frontend@test.com", "#display_owner")
         self.assert_text(10, "#display_qty")
-        self.assert_text("Date: 2021-09-01 00:00:00",  "#display_exp")
+        self.assert_text("2021-09-01 00:00:00",  "#display_exp")
         self.assert_text(10, "#display_price")
         #Check if tickets are expired
         today = datetime.now()
         exp = (self.get_element("#display_exp").text).split()
-        exp_date = datetime.strptime(exp[1], '%Y-%m-%d')
+        exp_date = datetime.strptime(exp[0], '%Y-%m-%d')
         self.assert_true(exp_date>today)
     
     @patch('qa327.backend.get_user', return_value=test_user)

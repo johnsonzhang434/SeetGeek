@@ -209,14 +209,16 @@ def update_ticket(orig_name, new_name, qty, price, date):
 	heck
 	"""
 	errors = []
-	if get_ticket(orig_name) is None:
-		errors.append("Ticket not found, ticket not updated")
-	errors += (validate_ticket_name(new_name))
-	errors += (validate_ticket_qty(qty))
-	errors +=(validate_ticket_price(price))
-	if not validate_ticket_date(date):
-		errors.append("invalid date format")
-
+	try:
+		if get_ticket(orig_name) is None:
+			errors.append("Ticket not found, ticket not updated")
+		errors += (validate_ticket_name(new_name))
+		errors += (validate_ticket_qty(qty))
+		errors +=(validate_ticket_price(price))
+		if not validate_ticket_date(date):
+			errors.append("invalid date format")
+	except ValueError:
+		""
 	if len(errors) > 0:
 		return errors
 
@@ -278,13 +280,14 @@ def buy_ticket(name, qty, user):
 # if no error
 def sell_ticket(name, qty, price, date):
 	errors = []
-	
-	errors += (validate_ticket_name(name))
-	errors += (validate_ticket_qty(qty))
-	errors +=(validate_ticket_price(price))
-	if not validate_ticket_date(date):
-		errors.append("invalid date format")
-
+	try:
+		errors += (validate_ticket_name(name))
+		errors += (validate_ticket_qty(qty))
+		errors +=(validate_ticket_price(price))
+		if not validate_ticket_date(date):
+			errors.append("invalid date format")
+	except ValueError:
+		""
 	if len(errors) > 0:
 		return errors
 

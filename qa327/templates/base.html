@@ -64,6 +64,38 @@
         label{
             color: rgba(255, 255, 255, 0.8);
         }
+        .ticket-table{
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            min-width: 400px;
+            border-radius: 5px 5px 0 0;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.15);
+        }
+        .ticket-table thead tr{
+            background-color: #e14eca;
+            color:aliceblue;
+            text-align: left;
+        }
+        .ticket-table th,
+        .ticket-table td{
+            padding: 12px 15px;
+        }
+        .ticket-table tbody tr{
+            border-bottom: 1px solid #dddddd;
+            font-weight: bold;
+            color:#616161;
+        }
+        .ticket-table tbody tr:nth-of-type(even){
+            background-color: #f3f3f3;
+        }
+        .ticket-table tbody tr:nth-of-type(odd){
+            background-color:rgb(216, 214, 214);
+        }
+        .ticket-table tbody tr:last-of-type{
+            border-bottom: 2px solid  #e14eca;
+        }
     </style>
 
 </head>
