@@ -1,7 +1,7 @@
 version: "2"
 services:
   seetgeek-web:
-    image: your_company/seetgeek
+    image: johnsonzhang434/hypertextassassins:v2.0.0
     depends_on:
       - seetgeek-db
     links:
