@@ -273,6 +273,8 @@ def buy_ticket(name, qty, user):
 	if ticket is not None:
 		ticket.qty -= int(qty)
 		user.balance -= calculate_price(ticket.price, qty)
+		if(ticket.qty == 0):
+			db.session.delete(ticket)
 		db.session.commit()
 	return []
 
