@@ -338,7 +338,7 @@ class R6Test(BaseCase):
 		self.open(base_url)
 		#enter new name/updated name
 		self.type("#buy_name", "test ticket")
-		self.type("#buy_qty", "100")
+		self.type("#buy_qty", "99")
 		#click update
 		self.click("#buy")
 		self.assert_element("#message")
